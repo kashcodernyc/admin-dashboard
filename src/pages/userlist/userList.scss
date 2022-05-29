@@ -1,0 +1,34 @@
+.list {
+    width: 100%;
+    display: flex;
+
+    .listContainer {
+        flex: 6;
+        .top,
+        .bottom {
+            -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            padding: 20px;
+            margin: 20px;
+
+            .title {
+                color: gray;
+                font-size: 20px;
+            }
+
+            .adduser{
+                width: 150px;
+                padding: 10px;
+                border: none;
+                background-color: teal;
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
