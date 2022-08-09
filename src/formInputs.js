@@ -1,41 +1,41 @@
 export const userInputs = [{
-        id: 1,
+        id: "username",
         label: "Username",
         type: "text",
         placeholder: "type username",
     },
     {
-        id: 2,
+        id: "fullname",
         label: "Full Name",
         type: "text",
         placeholder: "type full name",
     },
     {
-        id: 3,
+        id: "email",
         label: "Email",
-        type: "mail",
+        type: "email",
         placeholder: "type email",
     },
     {
-        id: 4,
+        id: "phone",
         label: "Phone",
         type: "text",
         placeholder: "type phone number",
     },
     {
-        id: 5,
+        id: "password",
         label: "Password",
         type: "password",
         placeholder: "type password",
     },
     {
-        id: 6,
+        id: "address",
         label: "Address",
         type: "text",
         placeholder: "type address",
     },
     {
-        id: 7,
+        id: "country",
         label: "Country",
         type: "text",
         placeholder: "type country",
@@ -43,24 +43,51 @@ export const userInputs = [{
 ];
 
 export const invoiceInputs = [{
-        id: 1,
+        id: "fullname",
         label: "Full Name",
         type: "text"
 
     },
     {
-        id: 2,
+        id: "username",
         label: "Username",
         type: "text"
     },
     {
-        id: 3,
+        id: "email",
         label: "Email",
         type: "mail",
     },
     {
-        id: 4,
+        id: "subject",
         label: "Subject",
         type: "text"
     }
 ]
+
+export const signupInputs = [
+    {
+        id: "fullname",
+        label: "Full Name",
+        type: "text",
+        placeholder: "type full name"
+    },
+    {
+        id: "username",
+        label: "Username",
+        type: "text",
+        placeholder: "type username"
+    },
+    {
+        id: "email",
+        label: "Email",
+        type: "email",
+        placeholder: "type email"
+    },
+    {
+        id: "password",
+        label: "Password",
+        type: "password",
+        placeholder: "type password"
+    }]
+

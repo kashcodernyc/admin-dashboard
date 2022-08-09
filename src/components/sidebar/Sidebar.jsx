@@ -8,10 +8,36 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 const Sidebar = () => {
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    const auth = getAuth();
+    signOut(auth).then((userCredential) => {
+      dispatch({ type: "LOGOUT", payload: userCredential })
+      navigate('/login')
+    }).catch((error) => {
+      console.log(error);
+    });
+
+
+  }
+
+
+
+
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -71,13 +97,10 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <li>
-            <SettingsIcon className="icon" />
-            <span>Settings</span>
-          </li>
-          <li>
+          <li onClick={handleLogout}>
             <LogoutIcon className="icon" />
             <span>Logout</span>
+
           </li>
         </ul>
       </div>

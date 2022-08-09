@@ -1,10 +1,12 @@
-import './single.scss';
+import './singleuser.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
-import Chart from '../../components/chart/Chart';
-import Table from '../../components/table/Table';
+import { useContext } from 'react';
+import { UserContext } from '../../Contexts/UserContext';
 
 const Single = () => {
+  const { loggedUser } = useContext(UserContext);
+
   return (
     <div className="single">
       <Sidebar />
@@ -12,40 +14,37 @@ const Single = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-            <h1 className="itemTitle">Cindy Roberts</h1>
-            <div className="editButton">Edit</div>
+            <h1 className="itemTitle">Profile</h1>
             <div className="item">
               <div className="itemIng">
-                <img src="/images/Cindy.jpg" alt="" className="profileImg" />
+                <img src={loggedUser.img} alt="" className="profileImg" />
               </div>
+
               <div className="details">
                 <div className="detailItem">
-                  <span className="itemKey">Email:</span>
-                  <span className="itemValue">cindy@example.com</span>
+                  <span className="itemKey">Full Name:</span>
+                  <span className="itemValue">{loggedUser.username}</span>
                 </div>
                 <div className="detailItem">
+                  <span className="itemKey">Email:</span>
+                  <span className="itemValue">{loggedUser.email}</span>
+                </div>
+
+                <div className="detailItem">
                   <span className="itemKey">Phone:</span>
-                  <span className="itemValue">+1 123 456 7890</span>
+                  <span className="itemValue">{loggedUser.phone}</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Address:</span>
-                  <span className="itemValue">54 Jam Ave, Myrtle Beach, SC</span>
+                  <span className="itemValue">{loggedUser.address}</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Country:</span>
-                  <span className="itemValue">USA</span>
+                  <span className="itemValue">{loggedUser.country}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="right">
-            <Chart aspect={3 / 1} title="User Login Stats (Past 5 Months)" />
-          </div>
-        </div>
-        <div className="bottom">
-          <h1 className="title">Latest Invoices</h1>
-          <Table />
-
         </div>
       </div>
     </div>

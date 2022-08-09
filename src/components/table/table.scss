@@ -1,29 +1,34 @@
-.table{
-    .cellWrapper{
+.container {
+  display: flex;
+  flex-direction: column;
+  .table {
+    .tableCell {
+      .viewButton {
+        color: rgb(49, 16, 168);
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      .deleteButton {
+        color: red;
+        cursor: pointer;
+      }
+      .cellWrapper {
         display: flex;
         align-items: center;
-
-        .image{
-            width: 35px;
-            height: 35px;
-            border-radius:50%;
-            margin-right: 10px;
-            object-fit: cover;
-        }
-    }
-    .status{
+      }
+      .status {
         padding: 5px;
         border-radius: 5px;
         &.completed {
-            color: green;
-            background-color: rgba(0, 128, 0, 0.151);
+          color: green;
+          background-color: rgba(0, 128, 0, 0.151);
         }
 
         &.pending {
-            color: goldenrod;
-            background-color: rgba(189, 189, 3, 0.103);
+          color: goldenrod;
+          background-color: rgba(189, 189, 3, 0.103);
         }
+      }
     }
-
-   
+  }
 }

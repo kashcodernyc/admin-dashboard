@@ -4,7 +4,10 @@ import Navbar from '../../components/navbar/Navbar';
 import Table from '../../components/table/Table';
 import { Link } from 'react-router-dom';
 
+
+
 const DisplayInvoice = () => {
+
     return (
         <div className="invoice">
             <Sidebar />
@@ -13,7 +16,7 @@ const DisplayInvoice = () => {
                 <div className="top">
                     <h1 className="title">Latest Invoices</h1>
                     <Link to="/invoice/add" style={{ textDecoration: 'none' }}>
-                        <button>Add Invoice</button>
+                        <button className="addInvoice">Add Invoice</button>
                     </Link>
                 </div>
                 <div className="bottom">
