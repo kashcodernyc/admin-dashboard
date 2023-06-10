@@ -4,8 +4,6 @@ import SingleUser from './pages/single/SingleUser';
 import AddUser from './pages/adduser/AddUser';
 import AddInvoice from './pages/invoice/addInvoice';
 import DisplayInvoice from './pages/invoice/DisplayInvoice';
-import Login from './pages/login/Login';
-import Signup from './pages/signup/Signup';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { userInputs, invoiceInputs } from './formInputs';
 import { useContext, useState, useEffect } from 'react';
@@ -14,6 +12,10 @@ import { collection, getDoc, doc, onSnapshot } from 'firebase/firestore';
 import { db, auth } from './firebase';
 import { AuthContext } from './components/context/AuthContext';
 import { UserContext } from './Contexts/UserContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Signup from './pages/forms/Signup';
+import Login from './pages/forms/Login';
 
 const App = () => {
 
@@ -111,6 +113,7 @@ const App = () => {
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
+      <ToastContainer position="top-center" />
     </div>
   )
 }

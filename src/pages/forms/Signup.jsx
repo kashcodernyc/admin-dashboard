@@ -1,15 +1,18 @@
-import './signup.scss';
+import './auth-forms.scss';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { db, auth, storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { signupInputs } from '../../formInputs';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
-const Signup = () => {
+const Signup = ({ setActiveTab }) => {
     const [file, setFile] = useState("");
     const [data, setData] = useState({});
     const [percent, setPercent] = useState(null);
@@ -71,37 +74,34 @@ const Signup = () => {
                 isAdmin: false,
                 timeStamp: serverTimestamp(),
             });
-            navigate('/login')
+            toast.success("Successfully Signed Up!");
+            navigate("/login")
+
 
         } catch (err) {
             console.log(err)
+            toast.error("Registration Unsuccessful!");
         }
     }
 
     return (
-        <div className="signupContainer">
-            <div className="newContainer">
-                <div className="top">
-                    <h1 className="title">Sign Up</h1>
-                </div>
-                <div className="bottom">
-                    <div className="right">
-                        <form onSubmit={handleAddUser}>
-                            {signupInputs.map((input) => (
-                                <div className="formInput" key={input.id}>
-                                    <label>{input.label}</label>
-                                    <input id={input.id} type={input.type} placeholder={input.placeholder} onChange={handleInput} required />
-                                </div>
-                            ))}
-                            <button disabled={percent !== null && percent < 100} type="submit">Sign Up</button>
-                            <Link to="/login">
-                                <p>alreay a user? sign in now</p>
-                            </Link>
-                        </form>
+        <>
+            <div className="authContainer">
+                <h1 className="title">Sign Up</h1>
+                <form onSubmit={handleAddUser}>
+                    {signupInputs.map((input) => (
+                        <div className="formInput" key={input.id}>
+                            <label>{input.label}</label>
+                            <input id={input.id} type={input.type} placeholder={input.placeholder} onChange={handleInput} required />
+                        </div>
+                    ))}
+                    <button disabled={percent !== null && percent < 100} className="button" type="submit">Sign Up</button>
+                    <div className="register">
+                        <span>Already have an account? <Link className="button" style={{ marginLeft: '5px' }} to="/login">Sign In</Link></span>
                     </div>
-                </div>
+                </form>
             </div>
-        </div >
+        </>
     )
 }
 
