@@ -107,7 +107,7 @@ const App = () => {
               </Route>
               <Route path='invoice'>
                 <Route index element={<RequireAuth><DisplayInvoice /></RequireAuth>} />
-                <Route path='add' element={<RequireAuth><AddInvoice inputs={invoiceInputs} title="Create a Invoice" /></RequireAuth>} />
+                <Route path='add' element={<RequireAuth><AddInvoice inputs={invoiceInputs} title="Create a Ticket" /></RequireAuth>} />
               </Route>
             </Route>
           </Routes>

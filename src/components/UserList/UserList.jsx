@@ -14,7 +14,8 @@ import { UserContext } from '../../Contexts/UserContext'
 
 
 const Datatable = () => {
-    const { data, setData } = useContext(UserContext)
+    const { data, setData, comment } = useContext(UserContext)
+    console.log(data.length, comment.length);
     const [isEditing, setIsEditing] = useState(false);
     const [currentId, setCurrentId] = useState("");
 

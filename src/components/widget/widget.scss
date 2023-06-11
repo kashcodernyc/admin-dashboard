@@ -2,6 +2,8 @@
     display: flex;
     flex: 1;
     justify-content:space-between;
+    background-color: #2F3C7E;
+    color: white;
     padding: 10px;
     -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
@@ -16,7 +18,6 @@
         .title{
             font-weight: bold;
             font-size: 14px;
-            color: rgb(160, 160, 160);
         }
         .counter{
             font-size: 28px;
@@ -31,7 +32,7 @@
             font-size: 14px;
             
             &.positive{
-                color: green;
+                color: rgb(0, 255, 68);
             }
             &.negative{
                 color: red;
