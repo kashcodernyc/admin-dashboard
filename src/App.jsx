@@ -4,6 +4,7 @@ import SingleUser from './pages/single/SingleUser';
 import AddUser from './pages/adduser/AddUser';
 import AddInvoice from './pages/invoice/addInvoice';
 import DisplayInvoice from './pages/invoice/DisplayInvoice';
+import SingleTicket from './pages/invoice/SingleTicket';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { userInputs, invoiceInputs } from './formInputs';
 import { useContext, useState, useEffect } from 'react';
@@ -20,12 +21,13 @@ import Login from './pages/forms/Login';
 const App = () => {
 
   const { currentUser } = useContext(AuthContext);
-  const [comment, setComment] = useState([])
+  const [comments, setComments] = useState([])
   const [loggedUser, setLoggedUser] = useState("");
-  const [data, setData] = useState([]);
-  const [viewId, setViewId] = useState("");
+  const [userData, setUserData] = useState([]);
   const [userId, setUserId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [ticketData, setTicketData] = useState([]);
+  const [tempData, setTempData] = useState(null);
 
   useEffect(() => {
     const getUserData = () => {
@@ -33,7 +35,7 @@ const App = () => {
         let list = [];
         snapshot.docs.forEach((doc) => {
           list.push({ id: doc.id, ...doc.data() });
-          setData(list);
+          setUserData(list);
         });
 
       }, (err) => {
@@ -47,25 +49,6 @@ const App = () => {
 
   }, [])
 
-  useEffect(() => {
-    const getCommentData = async () => {
-      onSnapshot(collection(db, "comment"), (snapshot) => {
-        let list = [];
-        snapshot.docs.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
-          setComment(list);
-        });
-
-      }, (err) => {
-        console.log(err);
-      });
-
-    }
-
-    getCommentData();
-
-
-  }, [])
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -87,13 +70,14 @@ const App = () => {
 
 
 
+
   const RequireAuth = ({ children }) => {
     return currentUser ? (children) : <Navigate to="/login" />;
   }
 
   return (
-    <div className='App'>
-      <UserContext.Provider value={{ data, setData, loggedUser, comment, setComment, userId, setUserId, isEditing, setIsEditing, viewId, setViewId }}>
+    <UserContext.Provider value={{ userData, setUserData, ticketData, tempData, setTempData, loggedUser, comments, setComments, userId, setUserId, isEditing, setIsEditing }}>
+      <div className='App'>
         <BrowserRouter>
           <Routes>
             <Route path='/'>
@@ -108,13 +92,14 @@ const App = () => {
               <Route path='invoice'>
                 <Route index element={<RequireAuth><DisplayInvoice /></RequireAuth>} />
                 <Route path='add' element={<RequireAuth><AddInvoice inputs={invoiceInputs} title="Create a Ticket" /></RequireAuth>} />
+                <Route path=':id' element={<RequireAuth><SingleTicket /></RequireAuth>} />
               </Route>
             </Route>
           </Routes>
         </BrowserRouter>
-      </UserContext.Provider>
+      </div >
       <ToastContainer position="top-center" />
-    </div>
+    </UserContext.Provider>
   )
 }
 

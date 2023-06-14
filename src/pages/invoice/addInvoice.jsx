@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './displayInvoice.scss';
+import './ticket.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { useNavigate, Link } from 'react-router-dom';

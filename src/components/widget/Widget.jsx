@@ -1,6 +1,6 @@
-import { useContext } from 'react';
-import { UserContext } from '../../Contexts/UserContext';
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../../firebase';
 import './widget.scss';
 import ArrowUpwardOutlinedIcon from '@mui/icons-material/ArrowUpwardOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
@@ -10,18 +10,37 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 
 const Widget = ({ type }) => {
-    const { data, comment, invoice } = useContext(UserContext)
-    console.log('data' + data, 'comment' + comment);
+    const [ticketDataLength, setTicketDataLength] = useState(0)
+    const [commentsLength, setCommentsLength] = useState(0)
+    const [usersLength, setUsersLength] = useState(0)
 
-    //temporary 
+    useEffect(() => {
+        onSnapshot(collection(db, "invoices"), (snapshot) => {
+            setTicketDataLength(snapshot.docs.length)
+        })
+    }, []);
+
+    useEffect(() => {
+        onSnapshot(collection(db, "comments"), (snapshot) => {
+            setCommentsLength(snapshot.docs.length)
+        })
+    }, []);
+
+    useEffect(() => {
+        onSnapshot(collection(db, "users"), (snapshot) => {
+            console.log(snapshot.docs.length)
+            setUsersLength(snapshot.docs.length)
+        })
+    }, []);
+
     let obj;
     const percentage = 20;
     switch (type) {
         case "Members":
             obj = {
                 title: "Users Stats",
-                link: <Link to="/users">view all users</Link>,
-                stats: data.length,
+                link: <a className="custom-link" href="/users">view all users</a>,
+                stats: usersLength,
                 icon: (
                     <PeopleOutlineIcon className="icon" />
                 )
@@ -30,8 +49,8 @@ const Widget = ({ type }) => {
         case "Comments":
             obj = {
                 title: "Comments",
-                link: <Link to="/users">view all comments</Link>,
-                stats: comment.length,
+                link: <a className="custom-link" href="/users">view all comments</a>,
+                stats: commentsLength,
                 icon: (
                     <ReceiptOutlinedIcon className="icon" />
                 )
@@ -39,8 +58,9 @@ const Widget = ({ type }) => {
             break;
         case "Invoices":
             obj = {
-                title: "Invoices",
-                link: <Link to="/invoice">view all invoices</Link>,
+                title: "Tickets",
+                link: <a className="custom-link" href="/invoice">view all tickets</a>,
+                stats: ticketDataLength,
                 icon: (
                     <LoginOutlinedIcon className="icon" />
                 )

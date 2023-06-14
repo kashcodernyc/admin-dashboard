@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const Sidebar = () => {
+const Sidebar = ({ isViewing, setIsViewing }) => {
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -32,9 +32,6 @@ const Sidebar = () => {
 
 
   }
-
-
-
 
 
   return (
@@ -97,10 +94,6 @@ const Sidebar = () => {
 
           </li>
         </ul>
-      </div>
-      <div className="bottom">
-        <div className="colorOption"></div>
-        <div className="colorOption"></div>
       </div>
     </div>
   )
