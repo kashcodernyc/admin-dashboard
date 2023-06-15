@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
 import './widget.scss';
@@ -7,12 +7,13 @@ import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import { UserContext } from '../../Contexts/UserContext';
 
 
 const Widget = ({ type }) => {
     const [ticketDataLength, setTicketDataLength] = useState(0)
     const [commentsLength, setCommentsLength] = useState(0)
-    const [usersLength, setUsersLength] = useState(0)
+    const { usersLength } = useContext(UserContext);
 
     useEffect(() => {
         onSnapshot(collection(db, "invoices"), (snapshot) => {
@@ -26,12 +27,6 @@ const Widget = ({ type }) => {
         })
     }, []);
 
-    useEffect(() => {
-        onSnapshot(collection(db, "users"), (snapshot) => {
-            console.log(snapshot.docs.length)
-            setUsersLength(snapshot.docs.length)
-        })
-    }, []);
 
     let obj;
     const percentage = 20;

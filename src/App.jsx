@@ -6,7 +6,7 @@ import AddInvoice from './pages/invoice/addInvoice';
 import DisplayInvoice from './pages/invoice/DisplayInvoice';
 import SingleTicket from './pages/invoice/SingleTicket';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { userInputs, invoiceInputs } from './formInputs';
+import { userInputs, ticketInputs } from './formInputs';
 import { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDoc, doc, onSnapshot } from 'firebase/firestore';
@@ -28,6 +28,8 @@ const App = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [ticketData, setTicketData] = useState([]);
   const [tempData, setTempData] = useState(null);
+  const [usersLength, setUsersLength] = useState(0)
+
 
   useEffect(() => {
     const getUserData = () => {
@@ -36,6 +38,7 @@ const App = () => {
         snapshot.docs.forEach((doc) => {
           list.push({ id: doc.id, ...doc.data() });
           setUserData(list);
+          setUsersLength(list.length);
         });
 
       }, (err) => {
@@ -76,7 +79,7 @@ const App = () => {
   }
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, ticketData, tempData, setTempData, loggedUser, comments, setComments, userId, setUserId, isEditing, setIsEditing }}>
+    <UserContext.Provider value={{ userData, setUserData, usersLength, ticketData, tempData, setTempData, loggedUser, comments, setComments, userId, setUserId, isEditing, setIsEditing }}>
       <div className='App'>
         <BrowserRouter>
           <Routes>
@@ -91,7 +94,7 @@ const App = () => {
               </Route>
               <Route path='invoice'>
                 <Route index element={<RequireAuth><DisplayInvoice /></RequireAuth>} />
-                <Route path='add' element={<RequireAuth><AddInvoice inputs={invoiceInputs} title="Create a Ticket" /></RequireAuth>} />
+                <Route path='add' element={<RequireAuth><AddInvoice inputs={ticketInputs} title="Create a Ticket" /></RequireAuth>} />
                 <Route path=':id' element={<RequireAuth><SingleTicket /></RequireAuth>} />
               </Route>
             </Route>

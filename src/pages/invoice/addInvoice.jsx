@@ -81,36 +81,38 @@ const Invoice = ({ inputs, title }) => {
     return (
         <div className="invoice">
             <Sidebar />
-            <div className="invoiceContainer">
+            <div className="container">
                 <Navbar />
-                <div className="container">
-                    <div className="title">
-                        <h1>{title}</h1>
-                    </div>
-                    <form onSubmit={handleAddInvoice}>
-                        <div className="formInput">
-                            <label htmlFor="file">Upload Image or File</label>
-                            <input type="file" id="file" style={{ border: 'none' }} />
+                <div className="invoiceContainer">
+                    <div className="description">
+                        <div>
+                            <h1 className="title">{title}</h1>
                         </div>
-                        {inputs.map((input) => (
-                            <div className="formInput" key={input.id}>
-                                <label>{input.label}</label>
-                                <input
-                                    id={input.id}
-                                    onChange={handleInput}
-                                    type={input.type}
-                                    placeholder={input.placeholder}
-                                />
+                        <form onSubmit={handleAddInvoice}>
+                            <div className="formInput">
+                                <label htmlFor="file">Upload Image or File</label>
+                                <input type="file" id="file" style={{ border: 'none' }} />
                             </div>
-                        ))}
-                        <div className="formInput">
-                            <textarea id="textarea" type="text" placeholder="enter text here..." onChange={handleInput}></textarea>
-                        </div>
-                        <div className="buttons">
-                            <button className="greenButton" type="submit">Post</button>
-                            <button className="redButton" onClick={handleClose}>Cancel</button>
-                        </div>
-                    </form>
+                            {inputs.map((input) => (
+                                <div className="formInput" key={input.id}>
+                                    <label>{input.label}</label>
+                                    <input
+                                        id={input.id}
+                                        onChange={handleInput}
+                                        type={input.type}
+                                        placeholder={input.placeholder}
+                                    />
+                                </div>
+                            ))}
+                            <div className="formInput">
+                                <textarea id="textarea" type="text" placeholder="enter text here..." onChange={handleInput}></textarea>
+                            </div>
+                            <div className="buttons">
+                                <button className="greenButton" type="submit">Post</button>
+                                <button className="redButton" onClick={handleClose}>Cancel</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -44,7 +44,7 @@ const DisplayInvoice = () => {
                     <Navbar />
                     <div className="invoiceContainer">
                         <div className="header">
-                            <h1>Latest Tickets</h1>
+                            <h1 className="title">Ticket List</h1>
                             <Link to="/invoice/add" style={{ textDecoration: 'none' }}>
                                 <button className="button">Add Tickets</button>
                             </Link>

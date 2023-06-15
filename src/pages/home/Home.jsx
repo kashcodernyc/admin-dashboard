@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import Widget from '../../components/widget/Widget';
 import Featured from '../../components/featured/Featured';
 import Chart from '../../components/chart/Chart';
+import DisplayInvoice from '../invoice/DisplayInvoice';
 
 const Home = () => {
   return (
@@ -16,10 +17,6 @@ const Home = () => {
           <Widget type='Comments' />
           <Widget type='Invoices' />
           <Widget type='Emails' />
-        </div>
-        <div className='charts'>
-          <Featured />
-          <Chart title="Users Login Stats (Last 5 Months)" aspect={2 / 1} />
         </div>
       </div>
     </div>

@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../Contexts/UserContext';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc, collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, collection, addDoc, query, where, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase';
 import Sidebar from '../../components/sidebar/Sidebar';
 import './ticket.scss';
 import Navbar from '../../components/navbar/Navbar';
+import EditTicket from './EditTicket';
 
 const SingleTicket = () => {
     const { id } = useParams();
+    const { loggedUser } = useContext(UserContext);
     const [ticketData, setTicketData] = useState(null);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const [userName, setUserName] = useState('');
+    const [isEditingTicket, setIsEditingTicket] = useState(false);
     const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchTicketData = async () => {
@@ -21,6 +25,7 @@ const SingleTicket = () => {
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     setTicketData(docSnap.data());
+                    console.log('fetched')
                 } else {
                     console.error('Ticket data not found');
                 }
@@ -30,7 +35,7 @@ const SingleTicket = () => {
         };
 
         fetchTicketData();
-    }, [id]);
+    }, [id, isEditingTicket]);
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -57,11 +62,7 @@ const SingleTicket = () => {
     }, [id]);
 
     const handleCommentChange = (e) => {
-        if (e.target.id === 'fullname') {
-            setUserName(e.target.value);
-        } else if (e.target.id === 'comment') {
-            setComment(e.target.value);
-        }
+        setComment(e.target.value);
     };
 
     const handleSubmitComment = async (e) => {
@@ -69,15 +70,15 @@ const SingleTicket = () => {
         try {
             // Add comment to the 'comments' collection
             const commentData = {
-                fullname: userName,
+                fullname: loggedUser.fullname,
+                image: loggedUser.img,
                 comment: comment,
                 ticketId: id,
+                timeStamp: serverTimestamp(),
             };
             const commentRef = await addDoc(collection(db, 'comments'), commentData);
-            console.log('Comment added with ID: ', commentRef.id);
 
             // Clear the comment input fields
-            setUserName('');
             setComment('');
         } catch (err) {
             console.log(err);
@@ -87,6 +88,18 @@ const SingleTicket = () => {
     if (ticketData === null) {
         return <div>Loading...</div>;
     }
+    const formatDate = (date) => {
+        const options = {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        };
+
+        return date.toLocaleString('en-US', options);
+    }
 
     return (
         <div className="invoice">
@@ -94,49 +107,53 @@ const SingleTicket = () => {
             <div className="container">
                 <Navbar />
                 <div className="invoiceContainer">
-                    <div className="header">
-                        <h1> Ticket Description </h1>
-                        <button className="button" onClick={() => navigate('/invoice')}>
-                            View All Tickets
-                        </button>
-                    </div>
-                    <div className="ticketInfo">
-                        <h3 className="title">Subject: {ticketData.subject}</h3>
-                        <p>Created by: {ticketData.fullname}</p>
-                        <h3>Description:</h3>
-                        <p>{ticketData.textarea}</p>
-                    </div>
-                    <div className="commentSection">
-                        <h3>Add a Comment</h3>
-                        <form onSubmit={handleSubmitComment}>
-                            <div>
-                                <label htmlFor="fullname">Full Name:</label>
-                                <input
-                                    type="text"
-                                    id="fullname"
-                                    value={userName}
-                                    onChange={handleCommentChange}
-                                />
+                    {isEditingTicket ? <EditTicket id={id} setIsEditingTicket={setIsEditingTicket} /> : (
+                        <div className="description">
+                            <div className="header">
+                                <h1 className="title"> Ticket Description </h1>
+                                <button className="button" onClick={() => setIsEditingTicket(true)}>
+                                    Edit Ticket
+                                </button>
                             </div>
-                            <div>
-                                <label htmlFor="comment">Comment:</label>
-                                <textarea
-                                    id="comment"
-                                    value={comment}
-                                    onChange={handleCommentChange}
-                                ></textarea>
+                            <div className="ticketInfo">
+                                <h3 className="h3title">Subject: {ticketData.subject}</h3>
+                                <p>Created by: {ticketData.fullname}</p>
+                                <h3 className="h3title">Description:</h3>
+                                <p>{ticketData.textarea}</p>
                             </div>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </div>
+                            <div className="commentSection">
+                                <form onSubmit={handleSubmitComment}>
+                                    <div className="formInput">
+                                        <label className="h3title" htmlFor="comment">Add Comment:</label>
+                                        <textarea
+                                            id="comment"
+                                            value={comment}
+                                            onChange={handleCommentChange}
+                                        ></textarea>
+                                    </div>
+                                    <button className="button" type="submit">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    )}
                     <div className="comments">
                         <h3>Comments</h3>
-                        {comments.map((comment) => (
-                            <div key={comment.id}>
-                                <p>{comment.fullname}</p>
-                                <p>{comment.comment}</p>
-                            </div>
-                        ))}
+                        {comments
+                            .sort((a, b) => b.timeStamp.toDate() - a.timeStamp.toDate())
+                            .map((comment) => (
+                                <div className="post-container" key={comment.id}>
+                                    <div className="image-container">
+                                        <img src={comment.image} alt={comment.fullname} class="user-image" />
+                                    </div>
+                                    <div class="comment-container">
+                                        <p className="username">{comment.fullname}</p>
+                                        <p className="comment">{comment.comment}</p>
+                                        <p className="comment">
+                                            {comment.timeStamp ? formatDate(comment.timeStamp.toDate()) : null}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </div>

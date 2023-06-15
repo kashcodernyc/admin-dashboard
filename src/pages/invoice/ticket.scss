@@ -1,13 +1,9 @@
 .invoice {
   display: flex;
+  max-width: 1920px;
 }
 
-.invoiceContainer {
-  flex: 6;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
+
 
 .container {
   flex: 6;
@@ -15,15 +11,33 @@
   flex-direction: column;
   color: white;
   padding: 20px;
+  height: 100vh;
+  overflow: scroll;
+}
+
+.description{
+  background-color: #2F3C7E;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .header {
+  padding: 5px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
 }
 
-.button{
+.h3title{
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+}
+
+.ticketInfo{
+  padding: 5px;
+}
+
+.button {
   padding: 8px 16px;
   background-color: #1d63ff;
   color: white;
@@ -53,16 +67,16 @@ tr {
   background-color: rgba(0, 255, 68, 0.506);
   margin-right: 20px;
   border: none;
-  width: 60px;
-  height: 25px;
+  width: 80px;
+  height: 35px;
   color: white;
 }
 
 .redButton {
   background-color: #f44336;
   border: none;
-  width: 60px;
-  height: 25px;
+  width: 80px;
+  height: 35px;
   color: white;
 }
 
@@ -73,10 +87,6 @@ tr {
   align-items: center;
   color: white;
   padding: 20px;
-}
-
-.title {
-  margin-bottom: 20px;
 }
 
 .formInput {
@@ -95,15 +105,47 @@ input[type='file'] {
 }
 
 textarea {
-  width: 100%;
   height: 100px;
   padding: 5px;
+  margin-right: 10px;
 }
 
 
 
 
-.ticketinfo{
-  background-color: #1d65ff;
-  width: 80%
+.post-container {
+  background-color: #00143e;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.comment-container {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.comment {
+  margin-top: 5px;
+  font-size: 12px;
+  color: rgb(207, 207, 207);
 }

@@ -10,13 +10,13 @@ const List = () => {
             <Sidebar />
             <div className="listContainer">
                 <Navbar />
-                <div className="top">
-                    <h1 className="title">Current Users</h1>
-                    <Link to="/users/add" style={{ textDecoration: 'none' }}>
-                        <button className="adduser">Add User</button>
-                    </Link>
-                </div>
                 <div className="bottom">
+                    <div className="header">
+                        <h1 className="title">Current Users</h1>
+                        <Link to="/users/add" style={{ textDecoration: 'none' }}>
+                            <button className="button">Add User</button>
+                        </Link>
+                    </div>
                     <UserList />
                 </div>
             </div>

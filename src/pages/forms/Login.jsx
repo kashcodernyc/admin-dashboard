@@ -50,7 +50,7 @@ const Login = () => {
             <span>dont have account? <Link className="button" style={{ marginLeft: '5px' }} to="/signup">Sign Up</Link></span>
           </div>
           <div className="test-account">
-            <p>Test Account: peter@gmail.com</p>
+            <p>Test Account: mali@gmail.com</p>
             <p>Test Password: nba1234</p>
           </div>
         </form>

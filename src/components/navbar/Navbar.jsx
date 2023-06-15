@@ -26,23 +26,6 @@ const Navbar = () => {
           <div className="item">
             Hello, {!loggedUser ? null : loggedUser.username}
           </div>
-          {/* <div className="item">
-            <FullscreenExitIcon className="icon" />
-          </div>
-          <div className="item">
-            <DarkModeIcon className="icon" />
-          </div>
-          <div className="item">
-            <NotificationsNoneIcon className="icon" />
-            <div className="counter">1</div>
-          </div>
-          <div className="item">
-            <ChatBubbleOutlineIcon className="icon" />
-            <div className="counter">2</div>
-          </div>
-          <div className="item">
-            <FormatListBulletedIcon className="icon" />
-          </div> */}
           <div className="item">
             <img src={!loggedUser ? '/images/default.jpg' : loggedUser.img} className="avatar" alt="" />
           </div>

@@ -43,7 +43,7 @@ export const userInputs = [
   },
 ];
 
-export const invoiceInputs = [
+export const ticketInputs = [
   {
     id: "fullname",
     label: "Full Name",
