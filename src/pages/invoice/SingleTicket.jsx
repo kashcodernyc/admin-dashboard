@@ -110,7 +110,7 @@ const SingleTicket = () => {
                     {isEditingTicket ? <EditTicket id={id} setIsEditingTicket={setIsEditingTicket} /> : (
                         <div className="description">
                             <div className="header">
-                                <h1 className="title"> Ticket Description </h1>
+                                <h1 className="whiteTitle"> Ticket Description </h1>
                                 <button className="button" onClick={() => setIsEditingTicket(true)}>
                                     Edit Ticket
                                 </button>
@@ -129,6 +129,7 @@ const SingleTicket = () => {
                                             id="comment"
                                             value={comment}
                                             onChange={handleCommentChange}
+                                            required
                                         ></textarea>
                                     </div>
                                     <button className="button" type="submit">Submit</button>
@@ -137,7 +138,7 @@ const SingleTicket = () => {
                         </div>
                     )}
                     <div className="comments">
-                        <h3>Comments</h3>
+                        <h3 className="title">Comments</h3>
                         {comments
                             .sort((a, b) => b.timeStamp.toDate() - a.timeStamp.toDate())
                             .map((comment) => (

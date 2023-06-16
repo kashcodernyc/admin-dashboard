@@ -87,7 +87,7 @@ const Signup = ({ setActiveTab }) => {
     return (
         <>
             <div className="authContainer">
-                <h1 className="title">Sign Up</h1>
+                <h1 className="whiteTitle">Sign Up</h1>
                 <form onSubmit={handleAddUser}>
                     {signupInputs.map((input) => (
                         <div className="formInput" key={input.id}>
@@ -97,7 +97,7 @@ const Signup = ({ setActiveTab }) => {
                     ))}
                     <button disabled={percent !== null && percent < 100} className="button" type="submit">Sign Up</button>
                     <div className="register">
-                        <span>Already have an account? <Link className="button" style={{ marginLeft: '5px' }} to="/login">Sign In</Link></span>
+                        <span>Already have an account? <button className="button" style={{ marginLeft: '10px' }} onClick={() => navigate('/login')}>Sign In</button></span>
                     </div>
                 </form>
             </div>

@@ -4,10 +4,15 @@
 }
 .listContainer {
     flex: 6;
+    margin: 20px;
+    padding: 20px;
+    background-color: #c2c2c250;
+    border-radius: 10px;
+    height: 90vh;
+    overflow: scroll;
 }
 .top,
 .bottom {
-    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
     padding: 20px;
     margin: 20px;
 }

@@ -1,9 +1,10 @@
+
 export const userColumns = [
     {
         field: "user", headerName: "Username", width: 200, renderCell: (params) => {
             return (
                 <div className="cellWithImg">
-                    <img className="cellImg" src={params.row.img} alt="avatar" />
+                    <img className="cellImg" src={params.row.img ? params.row.img : process.env.PUBLIC_URL + '/images/default.jpg'} alt="avatar" />
                     {params.row.username}
                 </div>
             )

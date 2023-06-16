@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <>
       <div className="authContainer">
-        <h1 className="title">Sign In</h1>
+        <h1 className="whiteTitle">Sign In</h1>
         <form onSubmit={handleLogin}>
           <div className="formInput">
             <label>Email</label>
@@ -47,7 +47,7 @@ const Login = () => {
           </div>
           <button className="button" type="submit">Sign In</button>
           <div className="register">
-            <span>dont have account? <Link className="button" style={{ marginLeft: '5px' }} to="/signup">Sign Up</Link></span>
+            <span>dont have account? <button className="button" style={{ marginLeft: '10px' }} onClick={() => navigate('/signup')}>Sign Up</button></span>
           </div>
           <div className="test-account">
             <p>Test Account: mali@gmail.com</p>

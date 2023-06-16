@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
 import './widget.scss';
 import ArrowUpwardOutlinedIcon from '@mui/icons-material/ArrowUpwardOutlined';
@@ -14,6 +15,7 @@ const Widget = ({ type }) => {
     const [ticketDataLength, setTicketDataLength] = useState(0)
     const [commentsLength, setCommentsLength] = useState(0)
     const { usersLength } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         onSnapshot(collection(db, "invoices"), (snapshot) => {
@@ -34,7 +36,7 @@ const Widget = ({ type }) => {
         case "Members":
             obj = {
                 title: "Users Stats",
-                link: <a className="custom-link" href="/users">view all users</a>,
+                link: <span className="custom-link" onClick={() => navigate("/users")}>view all users</span>,
                 stats: usersLength,
                 icon: (
                     <PeopleOutlineIcon className="icon" />
@@ -44,7 +46,7 @@ const Widget = ({ type }) => {
         case "Comments":
             obj = {
                 title: "Comments",
-                link: <a className="custom-link" href="/users">view all comments</a>,
+                link: <span className="custom-link" onClick={() => navigate("/users")}>view all comments</span>,
                 stats: commentsLength,
                 icon: (
                     <ReceiptOutlinedIcon className="icon" />
@@ -54,7 +56,7 @@ const Widget = ({ type }) => {
         case "Invoices":
             obj = {
                 title: "Tickets",
-                link: <a className="custom-link" href="/invoice">view all tickets</a>,
+                link: <span className="custom-link" onClick={() => navigate("/invoice")}>view all tickets</span>,
                 stats: ticketDataLength,
                 icon: (
                     <LoginOutlinedIcon className="icon" />
@@ -77,7 +79,7 @@ const Widget = ({ type }) => {
 
         <div className="widget">
             <div className="left">
-                <div className="title">{obj.title}</div>
+                <div className="whiteTitle">{obj.title}</div>
                 <div className="counter">{obj.stats}</div>
                 <div className="link">{obj.link}</div>
             </div>
