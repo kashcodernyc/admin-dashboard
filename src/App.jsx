@@ -1,10 +1,10 @@
 import Home from './pages/home/Home';
 import UserList from './pages/userlist/UserList';
-import SingleUser from './pages/single/SingleUser';
+import UserProfile from './pages/single/userProfile';
 import AddUser from './pages/adduser/AddUser';
-import AddInvoice from './pages/invoice/addInvoice';
-import DisplayInvoice from './pages/invoice/DisplayInvoice';
-import SingleTicket from './pages/invoice/SingleTicket';
+import AddTicket from './pages/tickets/addTicket';
+import DisplayTickets from './pages/tickets/DisplayTickets';
+import SingleTicket from './pages/tickets/SingleTicket';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { userInputs, ticketInputs } from './formInputs';
 import { useContext, useState, useEffect } from 'react';
@@ -17,6 +17,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Signup from './pages/forms/Signup';
 import Login from './pages/forms/Login';
+import EditUser from './components/edituser/EditUser';
 
 const App = () => {
 
@@ -61,7 +62,7 @@ const App = () => {
         const snapshot = await getDoc(doc(db, "users", uid));
 
         if (snapshot.exists) {
-          setLoggedUser(snapshot.data());
+          setLoggedUser({ id: uid, ...snapshot.data() });
         } else {
           console.log("user document missing")
         }
@@ -89,12 +90,13 @@ const App = () => {
               <Route path='signup' element={<Signup />} />
               <Route path='users'>
                 <Route index element={<RequireAuth><UserList /></RequireAuth>} />
-                <Route path='profile' element={<SingleUser />} />
+                <Route path='profile' element={<UserProfile />} />
                 <Route path='add' element={<RequireAuth><AddUser inputs={userInputs} title="Add New User" /></RequireAuth>} />
+                <Route path='edit' element={<RequireAuth><EditUser /></RequireAuth>} />
               </Route>
-              <Route path='invoice'>
-                <Route index element={<RequireAuth><DisplayInvoice /></RequireAuth>} />
-                <Route path='add' element={<RequireAuth><AddInvoice inputs={ticketInputs} title="Create a Ticket" /></RequireAuth>} />
+              <Route path='tickets'>
+                <Route index element={<RequireAuth><DisplayTickets /></RequireAuth>} />
+                <Route path='add' element={<RequireAuth><AddTicket inputs={ticketInputs} title="Create a Ticket" /></RequireAuth>} />
                 <Route path=':id' element={<RequireAuth><SingleTicket /></RequireAuth>} />
               </Route>
             </Route>

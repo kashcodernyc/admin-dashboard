@@ -97,7 +97,7 @@ const Signup = ({ setActiveTab }) => {
                     ))}
                     <button disabled={percent !== null && percent < 100} className="button" type="submit">Sign Up</button>
                     <div className="register">
-                        <span>Already have an account? <button className="button" style={{ marginLeft: '10px' }} onClick={() => navigate('/login')}>Sign In</button></span>
+                        <span>Already have an account? <span className="spanBtn" onClick={() => navigate('/login')}>Sign In</span></span>
                     </div>
                 </form>
             </div>

@@ -45,14 +45,15 @@ export const userInputs = [
 
 export const ticketInputs = [
   {
-    id: "fullname",
-    label: "Full Name",
-    type: "text",
-  },
-  {
     id: "subject",
     label: "Subject",
     type: "text",
+  },
+  {
+    id: "status",
+    label: "Status",
+    type: "select",
+    options: ["Unassigned", "Open", "Resolved", "Closed"],
   },
 ];
 

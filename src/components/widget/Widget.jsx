@@ -56,7 +56,7 @@ const Widget = ({ type }) => {
         case "Invoices":
             obj = {
                 title: "Tickets",
-                link: <span className="custom-link" onClick={() => navigate("/invoice")}>view all tickets</span>,
+                link: <span className="custom-link" onClick={() => navigate("/tickets")}>view all tickets</span>,
                 stats: ticketDataLength,
                 icon: (
                     <LoginOutlinedIcon className="icon" />

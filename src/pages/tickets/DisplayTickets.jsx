@@ -2,11 +2,13 @@ import './ticket.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { collection, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
+import { UserContext } from '../../Contexts/UserContext';
 import { db } from '../../firebase';
 
 const DisplayInvoice = () => {
+    const { loggedUser } = useContext(UserContext);
     const [ticketData, setTicketData] = useState([]);
     const navigate = useNavigate();
 
@@ -45,7 +47,7 @@ const DisplayInvoice = () => {
                     <div className="invoiceContainer">
                         <div className="header">
                             <h1 className="title">Ticket List</h1>
-                            <Link to="/invoice/add" style={{ textDecoration: 'none' }}>
+                            <Link to="/tickets/add" style={{ textDecoration: 'none' }}>
                                 <button className="button">Add Tickets</button>
                             </Link>
                         </div>
@@ -53,8 +55,9 @@ const DisplayInvoice = () => {
                             <thead>
                                 <tr>
                                     <th className="tableCell">Subject</th>
-                                    <th className="tableCell">Fullname</th>
+                                    <th className="tableCell">Reporter</th>
                                     <th className="tableCell">Date</th>
+                                    <th className="tableCell">Status</th>
                                     <th className="tableCell">Action</th>
                                 </tr>
                             </thead>
@@ -62,11 +65,12 @@ const DisplayInvoice = () => {
                                 {ticketData?.map((item, index) => (
                                     <tr key={item.id}>
                                         <td className="tableCell">{item.subject}</td>
-                                        <td className="tableCell">{item.fullname}</td>
-                                        <td className="tableCell">{item.timeStamp.toDate().toDateString()}</td>
+                                        <td className="tableCell">{item.reporter}</td>
+                                        <td className="tableCell">{item.timeStamp ? item.timeStamp.toDate().toDateString() : ''}</td>
+                                        <td className="tableCell">{item.status}</td>
                                         <td className="tableCell">
                                             <button
-                                                onClick={() => navigate(`/invoice/${item.id}`)}
+                                                onClick={() => navigate(`/tickets/${item.id}`)}
                                                 className="greenButton"
                                             >
                                                 View

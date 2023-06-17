@@ -36,19 +36,6 @@
               border-bottom: 1px solid gray;
             }
           }
-          button {
-            width: 150px;
-            padding: 10px;
-            border: none;
-            background-color: greenyellow;
-            color: white;
-            margin-top: 10px;
-            cursor: pointer;
-
-            &:disabled {
-              background-color: rgba(0, 196, 196, 0.247);
-            }
-          }
         }
       }
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './ticket.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
@@ -7,10 +7,17 @@ import { doc, setDoc, serverTimestamp, addDoc, collection } from 'firebase/fires
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { db, auth, storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { UserContext } from '../../Contexts/UserContext';
 
-const Invoice = ({ inputs, title }) => {
+const Tickets = ({ inputs, title }) => {
+    const { loggedUser } = useContext(UserContext)
     const [file, setFile] = useState('');
-    const [data, setData] = useState({});
+    const [ticketData, setTicketData] = useState({
+        subject: "",
+        reporter: loggedUser.fullname,
+        status: "Unassigned",
+        textarea: "",
+    });
     const [percent, setPercent] = useState(null);
     const navigate = useNavigate();
 
@@ -53,19 +60,17 @@ const Invoice = ({ inputs, title }) => {
     // }, [file]);
 
     const handleInput = (e) => {
-        const id = e.target.id;
-        const value = e.target.value;
-        setData({ ...data, [id]: value });
-        console.log(data);
+        const { id, value } = e.target;
+        setTicketData({ ...ticketData, [id]: value });
     };
 
-    const handleAddInvoice = async (e) => {
+    const handleAddTicket = async (e) => {
         e.preventDefault();
 
         try {
             // Add a new document with a generated id.
             await addDoc(collection(db, 'invoices'), {
-                ...data,
+                ...ticketData,
                 timeStamp: serverTimestamp(),
             });
             navigate(-1);
@@ -74,8 +79,7 @@ const Invoice = ({ inputs, title }) => {
         }
     };
     const handleClose = () => {
-        // Navigate back to the displayInvoice component
-        navigate('/invoice');
+        navigate('/tickets');
     };
 
     return (
@@ -88,7 +92,7 @@ const Invoice = ({ inputs, title }) => {
                         <div>
                             <h1 className="title">{title}</h1>
                         </div>
-                        <form onSubmit={handleAddInvoice}>
+                        <form onSubmit={handleAddTicket}>
                             <div className="formInput">
                                 <label htmlFor="file">Upload Image or File</label>
                                 <input type="file" id="file" style={{ border: 'none' }} />
@@ -96,14 +100,29 @@ const Invoice = ({ inputs, title }) => {
                             {inputs.map((input) => (
                                 <div className="formInput" key={input.id}>
                                     <label>{input.label}</label>
-                                    <input
-                                        id={input.id}
-                                        onChange={handleInput}
-                                        type={input.type}
-                                        placeholder={input.placeholder}
-                                    />
+                                    {input.type === "select" ? (
+                                        <select
+                                            id={input.id}
+                                            value={ticketData.status}
+                                            onChange={handleInput}
+                                            required
+                                        >
+                                            {input.options.map((option) => (
+                                                <option key={option} value={option}>{option}</option>
+                                            ))}
+                                        </select>
+                                    ) : (
+                                        <input
+                                            id={input.id}
+                                            onChange={handleInput}
+                                            type={input.type}
+                                            placeholder={input.placeholder}
+                                        />
+                                    )}
                                 </div>
+
                             ))}
+
                             <div className="formInput">
                                 <textarea id="textarea" type="text" placeholder="enter text here..." onChange={handleInput}></textarea>
                             </div>
@@ -119,4 +138,4 @@ const Invoice = ({ inputs, title }) => {
     );
 };
 
-export default Invoice;
+export default Tickets;

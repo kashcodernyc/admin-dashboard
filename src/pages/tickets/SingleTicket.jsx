@@ -117,7 +117,9 @@ const SingleTicket = () => {
                             </div>
                             <div className="ticketInfo">
                                 <h3 className="h3title">Subject: {ticketData.subject}</h3>
-                                <p>Created by: {ticketData.fullname}</p>
+                                <p>Reporter: {ticketData.fullname}</p>
+                                <h3 className="h3title">status:</h3>
+                                <p>{ticketData.status}</p>
                                 <h3 className="h3title">Description:</h3>
                                 <p>{ticketData.textarea}</p>
                             </div>

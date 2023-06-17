@@ -53,7 +53,7 @@ const Sidebar = ({ isViewing, setIsViewing }) => {
             </li>
           </Link>
 
-          <Link to="/invoice" style={{ textDecoration: 'none' }}>
+          <Link to="/tickets" style={{ textDecoration: 'none' }}>
             <li>
               <DescriptionOutlinedIcon className="icon" />
               <span>Tickets</span>

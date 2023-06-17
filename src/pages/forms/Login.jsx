@@ -47,7 +47,7 @@ const Login = () => {
           </div>
           <button className="button" type="submit">Sign In</button>
           <div className="register">
-            <span>dont have account? <button className="button" style={{ marginLeft: '10px' }} onClick={() => navigate('/signup')}>Sign Up</button></span>
+            <span>dont have account? <span className="spanBtn" onClick={() => navigate('/signup')}>Sign Up</span></span>
           </div>
           <div className="test-account">
             <p>Test Account: mali@gmail.com</p>

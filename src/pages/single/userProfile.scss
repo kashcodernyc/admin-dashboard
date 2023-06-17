@@ -1,0 +1,168 @@
+.profileContainer {
+    display: flex;
+}
+
+.singleContainer {
+    flex: 6;
+    margin: 20px;
+    padding: 20px;
+    background-color: #c2c2c250;
+    border-radius: 10px;
+}
+
+.profileDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0 0 0;
+    padding: 0;
+}
+
+.itemIng {
+    position: relative;
+}
+
+.profileImg {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.detailItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+label {
+    color: #00143e;
+}
+
+.itemKey {
+    font-weight: bold;
+    width: 100px;
+}
+
+.itemValue {
+    margin-left: 10px;
+}
+
+.details {
+    background-color: #00143e;
+    margin-top: 10px;
+    width: 300px;
+    height: 250px;
+    font-size: 14px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.modalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modalContent {
+    margin-top: 40px;
+    width: 50%;
+    height: 100%;
+    background-color: #00143e;
+    padding: 20px;
+    animation: slide-in 0.3s ease-in-out;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.editUser{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgContainer {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+.editedImg{
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius:50%;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.formInput label {
+    color: white;
+    margin-bottom: 5px;
+}
+
+.formInput input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .newContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bottom {
+        flex-direction: column;
+    }
+
+    .left,
+    .right {
+        width: 100%;
+        text-align: center;
+    }
+
+    .modalContent {
+    width: 100%;
+    height: 50%; 
+    }
+
+@keyframes slide-in {
+    from {
+        transform: translateY(-100%); /* Slide from top */
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+}

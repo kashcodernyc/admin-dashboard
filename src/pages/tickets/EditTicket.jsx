@@ -5,13 +5,15 @@ import { ticketInputs } from '../../formInputs'
 
 const EditTicket = ({ id, setIsEditingTicket }) => {
     const [prevTicketData, setPrevTicketData] = useState({
-        fllname: "",
         subject: "",
+        reporter: "",
+        status: "",
         textarea: '',
     });
     const [newTicketData, setNewTicketData] = useState({
-        fullname: "",
         subject: "",
+        reporter: "",
+        status: "",
         textarea: '',
     });
 
@@ -22,8 +24,13 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                 const docSnap = await getDoc(dataRef);
 
                 if (docSnap.exists()) {
-                    setPrevTicketData(docSnap.data());
-                    console.log(docSnap.data());
+                    const ticketData = docSnap.data();
+                    setPrevTicketData(ticketData);
+                    setNewTicketData((prevData) => ({
+                        ...prevData,
+                        ...ticketData,
+                    }));
+                    console.log(ticketData);
                 } else {
                     console.log("No such document!");
                 }
@@ -42,6 +49,7 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                     ...newTicketData,
                     timestamp: serverTimestamp()
                 })
+                console.log('this is after updating', docRef);
                 setIsEditingTicket(false);
             }
         } catch (err) {
@@ -52,10 +60,17 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
 
     const handleChange = (event) => {
         const { id, value } = event.target;
-        setNewTicketData((prevFormData) => ({
-            ...prevFormData,
-            [id]: value,
-        }));
+        if (id === "status") {
+            setNewTicketData((prevFormData) => ({
+                ...prevFormData,
+                status: value,
+            }));
+        } else {
+            setNewTicketData((prevFormData) => ({
+                ...prevFormData,
+                [id]: value,
+            }));
+        }
     };
 
     return (
@@ -67,14 +82,27 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                 {ticketInputs.map((input) => (
                     <div className="formInput" key={input.id}>
                         <label>{input.label}</label>
-                        <input
-                            id={input.id}
-                            value={newTicketData[input.id] || ''}
-                            onChange={handleChange}
-                            type={input.type}
-                            placeholder={prevTicketData[input.id]}
-                            required
-                        />
+                        {input.type === "select" ? (
+                            <select
+                                id={input.id}
+                                value={newTicketData[input.id] || ""}
+                                onChange={handleChange}
+                                required
+                            >
+                                {input.options.map((option) => (
+                                    <option key={option} value={option}>{option}</option>
+                                ))}
+                            </select>
+                        ) : (
+                            <input
+                                id={input.id}
+                                value={newTicketData[input.id] || ""}
+                                onChange={handleChange}
+                                type={input.type}
+                                placeholder={prevTicketData[input.id]}
+                                required
+                            />
+                        )}
                     </div>
                 ))}
                 <div className="formInput">

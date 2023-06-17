@@ -9,7 +9,7 @@ const List = () => {
             <Sidebar />
             <div className="listContainer">
                 <Navbar />
-                <div className="bottom">
+                <div className="tableContainer">
                     <div className="header">
                         <h1 className="title">Current Users</h1>
                     </div>

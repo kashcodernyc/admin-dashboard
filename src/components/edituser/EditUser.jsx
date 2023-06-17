@@ -1,34 +1,43 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../Contexts/UserContext';
 import { doc, serverTimestamp, updateDoc, getDoc } from "firebase/firestore";
 import { db, storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import '../../pages/single/userProfile.scss'
 
 
 
 
-const New = ({ currentId, setIsEditing }) => {
+const EditUser = () => {
+
+    const { loggedUser } = useContext(UserContext);
+    const userId = loggedUser.id;
+    console.log(loggedUser, userId);
 
     const [file, setFile] = useState("");
-    const [tempData, setTempData] = useState("");
+    const [prevData, setPrevData] = useState("");
     const [editedData, setEditedData] = useState({});
     const [percent, setPercent] = useState(null);
-    const navigate = useNavigate();
+
 
     useEffect(() => {
         const getUserData = async () => {
-            const dataRef = doc(db, "users", currentId);
+            const dataRef = doc(db, "users", userId);
             const docSnap = await getDoc(dataRef);
 
             if (docSnap.exists()) {
-                setTempData(docSnap.data());
-                console.log(docSnap.data());
+                const userData = docSnap.data();
+                setPrevData(userData);
+                setEditedData((oldData) => ({
+                    ...oldData,
+                    ...userData,
+                }))
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
             }
         }
-        currentId && getUserData();
+        userId && getUserData();
     }, [])
 
 
@@ -62,7 +71,6 @@ const New = ({ currentId, setIsEditing }) => {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         setEditedData((prev) => ({ ...prev, img: downloadURL }))
                     });
-                    // navigate(-1);
                 }
             );
 
@@ -82,13 +90,12 @@ const New = ({ currentId, setIsEditing }) => {
 
         try {
 
-            const docRef = doc(db, 'users', currentId);
+            const docRef = doc(db, 'users', userId);
             // Update the timestamp field with the value from the server
             await updateDoc(docRef, {
                 ...editedData,
                 timestamp: serverTimestamp()
             })
-            setIsEditing(false);
 
         } catch (err) {
             console.log(err)
@@ -99,57 +106,45 @@ const New = ({ currentId, setIsEditing }) => {
 
 
     return (
-        <div className="new">
-            <div className="newContainer">
-                <div className="top">
-                    <h1 className="title">Edit User</h1>
-                </div>
-                <div className="bottom">
-                    <div className="left">
-                        <img src={file ? URL.createObjectURL(file) : tempData.img} alt="" />
-                    </div>
-                    <div className="right">
-                        <form onSubmit={handleAddUser}>
-                            <div className="formInput">
-                                <label htmlFor="file">Upload Image</label>
-                                <input type="file" id="file" onChange={(e) => setFile(e.target.files[0])} />
-                            </div>
-                            <div className="formInput">
-                                <label>Username</label>
-                                <input id={"username"} type={"text"} placeholder={tempData.username} onChange={handleInput} />
-                            </div>
-                            <div className="formInput">
-                                <label>Full Name</label>
-                                <input id={"fullname"} type={"text"} placeholder={tempData.fullname} onChange={handleInput} />
-                            </div>
-                            <div className="formInput">
-                                <label>Email</label>
-                                <input id={"email"} type={"email"} placeholder={tempData.email} onChange={handleInput} />
-                            </div>
-                            <div className="formInput">
-                                <label>Phone</label>
-                                <input id={"phone"} type={"text"} placeholder={tempData.phone} onChange={handleInput} />
-                            </div>
-                            <div className="formInput">
-                                <label>Password</label>
-                                <input id={"password"} type={"password"} placeholder={"type password"} onChange={handleInput} />
-                            </div>
-                            <div className="formInput">
-                                <label>Address</label>
-                                <input id={"address"} type={"text"} placeholder={tempData.address} onChange={handleInput} />
-                            </div>
-                            <div className="formInput">
-                                <label>Country</label>
-                                <input id={"country"} type={"text"} placeholder={tempData.country} onChange={handleInput} />
-                            </div>
-                            <button disabled={percent !== null && percent < 100} type="submit">SEND</button>
-                            <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-                        </form>
-                    </div>
+        <div className="editUser">
+            <div className="top">
+                <h1 className="title">Edit User</h1>
+            </div>
+            <div className="imageContainer">
+                <div>
+                    <img className="editedImg" src={file ? URL.createObjectURL(file) : prevData.img} alt="" />
                 </div>
             </div>
-        </div >
-    )
+            <form className="editForm" onSubmit={handleAddUser}>
+
+                <div className="formInput">
+                    <label htmlFor="file">Upload Image</label>
+                    <input style={{ borderBottom: 'none' }} type="file" id="file" onChange={(e) => setFile(e.target.files[0])} />
+                </div>
+                <div className="formInput">
+                    <label>Full Name</label>
+                    <input id="fullname" type="text" value={editedData.fullname} placeholder={prevData.fullname} onChange={handleInput} />
+                </div>
+                <div className="formInput">
+                    <label>Email</label>
+                    <input id="email" required type="email" value={editedData.email} placeholder={prevData.email} onChange={handleInput} />
+                </div>
+                <div className="formInput">
+                    <label>Username</label>
+                    <input id="username" required type="text" value={editedData.username} placeholder={prevData.username} onChange={handleInput} />
+                </div>
+                <div className="formInput">
+                    <label>Password</label>
+                    <input id="password" required type="password" value={editedData.password} placeholder="Type password" onChange={handleInput} />
+                </div>
+                <div className="formInput">
+                    <label>Country</label>
+                    <input id="country" type="text" value={editedData.country} placeholder={prevData.country} onChange={handleInput} />
+                </div>
+                <button className="button" disabled={percent !== null && percent < 100} type="submit">Submit</button>
+            </form>
+        </div>
+    );
 }
 
-export default New
+export default EditUser
