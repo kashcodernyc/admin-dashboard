@@ -1,4 +1,4 @@
-import Home from './pages/home/Home';
+import Stats from './pages/stats/Stats';
 import UserList from './pages/userlist/UserList';
 import UserProfile from './pages/single/userProfile';
 import AddUser from './pages/adduser/AddUser';
@@ -85,7 +85,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path='/'>
-              <Route index element={<RequireAuth><Home /></RequireAuth>} />
+              <Route index element={<RequireAuth><DisplayTickets /></RequireAuth>} />
               <Route path='login' element={<Login />} />
               <Route path='signup' element={<Signup />} />
               <Route path='users'>
@@ -93,6 +93,7 @@ const App = () => {
                 <Route path='profile' element={<UserProfile />} />
                 <Route path='add' element={<RequireAuth><AddUser inputs={userInputs} title="Add New User" /></RequireAuth>} />
                 <Route path='edit' element={<RequireAuth><EditUser /></RequireAuth>} />
+                <Route path='stats' element={<RequireAuth><Stats /></RequireAuth>} />
               </Route>
               <Route path='tickets'>
                 <Route index element={<RequireAuth><DisplayTickets /></RequireAuth>} />

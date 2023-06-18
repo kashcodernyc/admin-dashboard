@@ -19,7 +19,7 @@ const Tickets = ({ inputs, title }) => {
         reporter: loggedUser.fullname,
         status: "Unassigned",
         textarea: "",
-        assignee: "",
+        assignee: {},
     });
     const [isSearching, setIsSearching] = useState(true);
     const [percent, setPercent] = useState(null);
@@ -79,6 +79,7 @@ const Tickets = ({ inputs, title }) => {
             // Add a new document with a generated id.
             await addDoc(collection(db, 'invoices'), {
                 ...ticketData,
+                assignee: selectedUser,
                 timeStamp: serverTimestamp(),
             });
             navigate(-1);
@@ -91,89 +92,89 @@ const Tickets = ({ inputs, title }) => {
     };
 
     return (
-        <div className="invoice">
-            <Sidebar />
-            <div className="container">
+        <div className="container">
+            <div className="sidebarContainer">
+                <Sidebar />
+            </div>
+            <div className="invoiceContainer">
                 <Navbar />
-                <div className="invoiceContainer">
-                    <div className="description">
-                        <div>
-                            <h1 className="title">{title}</h1>
-                        </div>
-                        <form onSubmit={handleAddTicket}>
-                            <div className="formInput">
-                                <label htmlFor="file">Upload Image or File</label>
-                                <input type="file" id="file" style={{ border: 'none' }} />
-                            </div>
-                            {inputs.map((input) => (
-                                <div className="formInput" key={input.id}>
-                                    <label>{input.label}</label>
-                                    {input.type === "select" ? (
-                                        <select
-                                            id={input.id}
-                                            value={ticketData.status}
-                                            onChange={handleInput}
-                                            required
-                                        >
-                                            {input.options.map((option) => (
-                                                <option key={option} value={option}>{option}</option>
-                                            ))}
-                                        </select>
-                                    ) : (
-                                        <input
-                                            id={input.id}
-                                            onChange={handleInput}
-                                            type={input.type}
-                                            placeholder={input.placeholder}
-                                        />
-                                    )}
-                                </div>
-                            ))}
-                            <div className="formInput">
-                                <label>Assignee</label>
-                                <input
-                                    id="searchUser"
-                                    type="text"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    placeholder="Search by name..."
-                                />
-                                <div>
-                                    {searchQuery && (
-                                        <ul>
-                                            {userData &&
-                                                userData
-                                                    .filter(
-                                                        (user) =>
-                                                            user.fullname &&
-                                                            user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
-                                                    )
-                                                    .map((user) => (
-                                                        <li
-                                                            onClick={() => {
-                                                                setSelectedUser(user);
-                                                                setSearchQuery(user.fullname);
-                                                            }}
-                                                            key={user.id}
-                                                        >
-                                                            {user.fullname}
-                                                        </li>
-                                                    ))}
-                                        </ul>
-                                    )}
-
-                                </div>
-
-                            </div>
-                            <div className="formInput">
-                                <textarea id="textarea" type="text" placeholder="enter text here..." onChange={handleInput}></textarea>
-                            </div>
-                            <div className="buttons">
-                                <button className="greenButton" type="submit">Post</button>
-                                <button className="redButton" onClick={handleClose}>Cancel</button>
-                            </div>
-                        </form>
+                <div className="description">
+                    <div>
+                        <h1 className="title">{title}</h1>
                     </div>
+                    <form onSubmit={handleAddTicket}>
+                        <div className="formInput">
+                            <label htmlFor="file">Upload Image or File</label>
+                            <input type="file" id="file" style={{ border: 'none' }} />
+                        </div>
+                        {inputs.map((input) => (
+                            <div className="formInput" key={input.id}>
+                                <label>{input.label}</label>
+                                {input.type === "select" ? (
+                                    <select
+                                        id={input.id}
+                                        value={ticketData.status}
+                                        onChange={handleInput}
+                                        required
+                                    >
+                                        {input.options.map((option) => (
+                                            <option key={option} value={option}>{option}</option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input
+                                        id={input.id}
+                                        onChange={handleInput}
+                                        type={input.type}
+                                        placeholder={input.placeholder}
+                                    />
+                                )}
+                            </div>
+                        ))}
+                        <div className="formInput">
+                            <label>Assignee</label>
+                            <input
+                                id="searchUser"
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Search by name..."
+                            />
+                            <div>
+                                {searchQuery && (
+                                    <ul>
+                                        {userData &&
+                                            userData
+                                                .filter(
+                                                    (user) =>
+                                                        user.fullname &&
+                                                        user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
+                                                )
+                                                .map((user) => (
+                                                    <li
+                                                        onClick={() => {
+                                                            setSelectedUser(user);
+                                                            setSearchQuery(user.fullname);
+                                                        }}
+                                                        key={user.id}
+                                                    >
+                                                        {user.fullname}
+                                                    </li>
+                                                ))}
+                                    </ul>
+                                )}
+
+                            </div>
+
+                        </div>
+                        <div className="formInput">
+                            <textarea id="textarea" type="text" placeholder="enter text here..." onChange={handleInput}></textarea>
+                        </div>
+                        <div className="buttons">
+                            <button className="greenButton" type="submit">Post</button>
+                            <button className="redButton" onClick={handleClose}>Cancel</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

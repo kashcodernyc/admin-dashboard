@@ -134,10 +134,6 @@ const EditUser = () => {
                     <input id="username" required type="text" value={editedData.username} placeholder={prevData.username} onChange={handleInput} />
                 </div>
                 <div className="formInput">
-                    <label>Password</label>
-                    <input id="password" required type="password" value={editedData.password} placeholder="Type password" onChange={handleInput} />
-                </div>
-                <div className="formInput">
                     <label>Country</label>
                     <input id="country" type="text" value={editedData.country} placeholder={prevData.country} onChange={handleInput} />
                 </div>

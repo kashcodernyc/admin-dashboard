@@ -83,9 +83,11 @@ const New = ({ inputs, title }) => {
   }
 
   return (
-    <div className="new">
-      <Sidebar />
-      <div className="newContainer">
+    <div className="container">
+      <div className="sidebarContainer">
+        <Sidebar />
+      </div>
+      <div className="invoiceContainer">
         <Navbar />
         <div className="top">
           <h1 className="title">{title}</h1>

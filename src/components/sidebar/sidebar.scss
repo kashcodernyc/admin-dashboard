@@ -1,75 +1,90 @@
-.sidebar{
-    flex:1;
-    height: 100vh;
+.sidebar {
     background-color: #00143e;
-    .top{
-        height: 50px;
+    height: 90vh;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.center {
+    flex-grow: 1;
+    display: flex;
+    align-items: stretch;
+}
+
+.center ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.groupTitle {
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.center ul li {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #0a003e;
+    }
+}
+
+.icon {
+    font-size: 22px;
+    color: rgb(0, 255, 68);
+}
+
+.navLinks {
+    font-size: 12px;
+    color: white;
+    margin-left: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+    .sidebar {
+    background-color: #00143e;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease;
+
+    &.open {
+        width: 250px;
+    }
+    }
+
+    .center {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    .burger-menu {
         display: flex;
-        align-items:center;
-        justify-content:center;
-        .logo{
-            font-size: 22px;
-            font-weight: bold;
-            color: white;
-        }
-    }
-    hr{
-        height: 0;
-        border: 0.5px solid rgb(231, 230, 230);
-    }
-    .center{
+        align-items: center;
+        justify-content: flex-end;
         padding: 10px;
-        ul{
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            .groupTitle{
-                font-size: 10px;
-                font-weight: bold;
-                color: white;
-                margin-top:15px;
-                margin-bottom:5px;
-            }
-            li{
-                display: flex;
-                align-items:center;
-                padding: 5px;
-                cursor: pointer;
-
-                &:hover{
-                    background-color: #0a003e;
-                }
-                .icon{
-                    font-size: 22px;
-                    color: rgb(0, 255, 68);
-                }
-                span{
-                    font-size: 14px;
-                    font-weight: 600;
-                    color: white;
-                    margin-left: 10px;
-                }
-            }
-        }
-    }
-    .bottom{
-        display: flex;
-        align-items:center;
-        margin: 10px;
-        .colorOption{
-            width:20px;
-            height: 20px;
-            border-radius: 5px;
-            border: 1px solid #7451f8;
-            cursor: pointer;
-            margin: 5px;
-
-            &:nth-child(1){
-                background-color: whitesmoke;
-            }
-            &:nth-child(2){
-                background-color: #333;
-            }
-        }
+        cursor: pointer;
+        z-index: 1;
+        position: fixed;
+        top: 0;
+        right: 0;
     }
 }

@@ -18,9 +18,11 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="profileContainer">
-      <Sidebar />
-      <div className="singleContainer">
+    <div className="container">
+      <div className="sidebarContainer">
+        <Sidebar />
+      </div>
+      <div className="invoiceContainer">
         <Navbar />
         <div className="profileDetails">
           <div className="top">

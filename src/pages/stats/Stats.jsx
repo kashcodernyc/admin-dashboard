@@ -1,4 +1,4 @@
-import './home.scss';
+import './Stats.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import Widget from '../../components/widget/Widget';
@@ -6,11 +6,13 @@ import Featured from '../../components/featured/Featured';
 import Chart from '../../components/chart/Chart';
 import DisplayInvoice from '../tickets/DisplayTickets';
 
-const Home = () => {
+const Stats = () => {
   return (
-    <div className='home'>
-      <Sidebar />
-      <div className='homeContainer'>
+    <div className='container'>
+      <div className="sidebarContainer">
+        <Sidebar />
+      </div>
+      <div className='invoiceContainer'>
         <Navbar />
         <div className='widgets'>
           <Widget type='Members' />
@@ -23,4 +25,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Stats

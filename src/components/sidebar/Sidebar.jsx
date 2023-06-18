@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './sidebar.scss';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
@@ -19,6 +20,10 @@ import { useNavigate } from 'react-router-dom';
 const Sidebar = ({ isViewing, setIsViewing }) => {
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSidebarToggle = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -35,62 +40,53 @@ const Sidebar = ({ isViewing, setIsViewing }) => {
 
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
       <div className="center">
         <ul>
           <Link to="/" style={{ textDecoration: 'none' }}>
             <li>
               <DashboardIcon className="icon" />
-              <span>Dashboard</span>
+              <span className="navLinks">Dashboard</span>
             </li>
           </Link>
-          <p className="groupTitle">LISTS</p>
 
           <Link to="/users" style={{ textDecoration: 'none' }}>
             <li>
               <PeopleOutlineIcon className="icon" />
-              <span>Users</span>
+              <span className="navLinks">Users</span>
             </li>
           </Link>
 
           <Link to="/tickets" style={{ textDecoration: 'none' }}>
             <li>
               <DescriptionOutlinedIcon className="icon" />
-              <span>Tickets</span>
+              <span className="navLinks">Tickets</span>
             </li>
           </Link>
 
           <li>
             <CalendarMonthIcon className="icon" />
-            <span>Events</span>
+            <span className="navLinks">Events</span>
           </li>
 
 
-
-          <p className="groupTitle">LINKS</p>
-
-          <li>
-            <QueryStatsIcon className="icon" />
-            <span>Stats</span>
-          </li>
-
-          <li>
-            <NotificationsNoneIcon className="icon" />
-            <span>Notifications</span>
-          </li>
-
-          <p className="groupTitle">ACCOUNT</p>
+          <Link to="/users/stats" style={{ textDecoration: 'none' }}>
+            <li>
+              <QueryStatsIcon className="icon" />
+              <span className="navLinks">Stats</span>
+            </li>
+          </Link>
 
           <Link to="/users/profile" style={{ textDecoration: 'none' }}>
             <li>
               <PersonOutlineIcon className="icon" />
-              <span>Profile</span>
+              <span className="navLinks">Profile</span>
             </li>
           </Link>
 
           <li onClick={handleLogout}>
             <LogoutIcon className="icon" />
-            <span>Logout</span>
+            <span className="navLinks">Logout</span>
 
           </li>
         </ul>

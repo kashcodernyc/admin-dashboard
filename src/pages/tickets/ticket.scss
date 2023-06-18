@@ -7,17 +7,24 @@
 
 
 .container {
-  flex: 6;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 20px;
   padding: 20px;
   background-color: #c2c2c250;
   border-radius: 10px;
-  height: 90vh;
-  overflow: scroll;
 }
 
+.sidebarContainer{
+  flex: 1;
+}
+
+.invoiceContainer{
+  flex: 6;
+  height: 90vh;
+  overflow: scroll;
+
+}
 .description{
   background-color: #2F3C7E;
   padding: 20px;
