@@ -8,7 +8,7 @@ import { UserContext } from '../../Contexts/UserContext';
 import { db } from '../../firebase';
 
 const DisplayInvoice = () => {
-    const { loggedUser } = useContext(UserContext);
+    const { loggedUser, userData } = useContext(UserContext);
     const [ticketData, setTicketData] = useState([]);
     const navigate = useNavigate();
 
@@ -19,6 +19,9 @@ const DisplayInvoice = () => {
                 list.push({ id: doc.id, ...doc.data() });
             });
             setTicketData(list);
+            if (ticketData.length > 0) {
+                console.log(ticketData);
+            }
         }, (err) => {
             console.log(err)
         });
@@ -36,7 +39,6 @@ const DisplayInvoice = () => {
             console.log(err);
         }
     };
-
 
     return (
         <>
@@ -59,6 +61,7 @@ const DisplayInvoice = () => {
                                     <th className="tableCell">Date</th>
                                     <th className="tableCell">Status</th>
                                     <th className="tableCell">Action</th>
+                                    <th className="tableCell">Assignee</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,6 +80,7 @@ const DisplayInvoice = () => {
                                             </button>
                                             <button className="redButton" onClick={() => deleteTicket(item.id)}>Delete</button>
                                         </td>
+                                        <td className="tableCell">{item.assignee ? item.assignee.fullname : 'unassigned'}</td>
                                     </tr>
                                 ))}
                             </tbody>

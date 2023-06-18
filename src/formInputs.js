@@ -53,7 +53,7 @@ export const ticketInputs = [
     id: "status",
     label: "Status",
     type: "select",
-    options: ["Unassigned", "Open", "Resolved", "Closed"],
+    options: ["Open", "In Progress", "Resolved", "Closed"],
   },
 ];
 

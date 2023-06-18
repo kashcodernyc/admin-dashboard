@@ -10,14 +10,18 @@ import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { UserContext } from '../../Contexts/UserContext';
 
 const Tickets = ({ inputs, title }) => {
-    const { loggedUser } = useContext(UserContext)
+    const { loggedUser, userData } = useContext(UserContext)
     const [file, setFile] = useState('');
+    const [selectedUser, setSelectedUser] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
     const [ticketData, setTicketData] = useState({
         subject: "",
         reporter: loggedUser.fullname,
         status: "Unassigned",
         textarea: "",
+        assignee: "",
     });
+    const [isSearching, setIsSearching] = useState(true);
     const [percent, setPercent] = useState(null);
     const navigate = useNavigate();
 
@@ -61,7 +65,11 @@ const Tickets = ({ inputs, title }) => {
 
     const handleInput = (e) => {
         const { id, value } = e.target;
-        setTicketData({ ...ticketData, [id]: value });
+        if (id === 'assignedUser') {
+            setSelectedUser(value);
+        } else {
+            setTicketData({ ...ticketData, [id]: value });
+        }
     };
 
     const handleAddTicket = async (e) => {
@@ -120,9 +128,43 @@ const Tickets = ({ inputs, title }) => {
                                         />
                                     )}
                                 </div>
-
                             ))}
+                            <div className="formInput">
+                                <label>Assignee</label>
+                                <input
+                                    id="searchUser"
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Search by name..."
+                                />
+                                <div>
+                                    {searchQuery && (
+                                        <ul>
+                                            {userData &&
+                                                userData
+                                                    .filter(
+                                                        (user) =>
+                                                            user.fullname &&
+                                                            user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
+                                                    )
+                                                    .map((user) => (
+                                                        <li
+                                                            onClick={() => {
+                                                                setSelectedUser(user);
+                                                                setSearchQuery(user.fullname);
+                                                            }}
+                                                            key={user.id}
+                                                        >
+                                                            {user.fullname}
+                                                        </li>
+                                                    ))}
+                                        </ul>
+                                    )}
 
+                                </div>
+
+                            </div>
                             <div className="formInput">
                                 <textarea id="textarea" type="text" placeholder="enter text here..." onChange={handleInput}></textarea>
                             </div>
