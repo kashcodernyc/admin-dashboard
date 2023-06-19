@@ -6,9 +6,7 @@ import './userList.scss'
 const List = () => {
     return (
         <div className="container">
-            <div className="sidebarContainer">
-                <Sidebar />
-            </div>
+            <Sidebar />
             <div className="invoiceContainer">
                 <Navbar />
                 <div className="tableContainer">

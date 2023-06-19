@@ -46,10 +46,9 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                 const docRef = doc(db, 'invoices', id);
                 await updateDoc(docRef, {
                     ...ticketData,
-                    assignee: selectedUser,
+                    assignee: selectedUser || ticketData.assignee,
                     timestamp: serverTimestamp(),
                 });
-                console.log('this is after updating', docRef);
                 setIsEditingTicket(false);
             }
         } catch (err) {
@@ -68,7 +67,7 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
     return (
         <div className="description">
             <div>
-                <h1 className="title">Edit Ticket</h1>
+                <h1 className="h3title">Edit Ticket</h1>
             </div>
             <form onSubmit={handleEditTicket}>
                 {ticketInputs.map((input) => (

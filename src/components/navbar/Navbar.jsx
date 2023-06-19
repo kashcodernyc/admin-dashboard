@@ -1,21 +1,29 @@
 import './navbar.scss';
-import SearchIcon from '@mui/icons-material/Search';
-import { useContext } from 'react';
+import { RxHamburgerMenu } from 'react-icons/rx'
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useContext } from 'react';
 import { UserContext } from '../../Contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { toggleSidebar } from '../../store/reducers';
 
 
 
 const Navbar = () => {
-  const navigate = useNavigate();
-
   const { loggedUser } = useContext(UserContext);
+  const isSidebarOpen = useSelector((state) => state.sidebar.isOpen);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleToggleSidebar = () => {
+    dispatch(toggleSidebar());
+    console.log(isSidebarOpen)
+  };
 
   return (
     <div className="navbar">
       <div className="wrapper">
-        <div className="search">
-          <input type="text" placeholder="search..." /><SearchIcon />
+        <div>
+          <RxHamburgerMenu onClick={handleToggleSidebar} className="burger-menu" />
         </div>
         <div className="items">
           <div className="item">

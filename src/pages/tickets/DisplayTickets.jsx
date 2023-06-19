@@ -1,33 +1,24 @@
 import './ticket.scss';
+import { useContext } from 'react';
+import { useSelector } from 'react-redux';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { UserContext } from '../../Contexts/UserContext';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { collection, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../../firebase';
+
 
 const DisplayInvoice = () => {
-    const [ticketData, setTicketData] = useState([]);
+    const { ticketData, setTicketData, loggedUser } = useContext(UserContext)
+    if (loggedUser) {
+        console.log(loggedUser);
+    }
+    if (ticketData) {
+        console.log(ticketData);
+    }
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const unsub = onSnapshot(collection(db, "invoices"), (snapshot) => {
-            let list = [];
-            snapshot.docs.forEach((doc) => {
-                list.push({ id: doc.id, ...doc.data() });
-            });
-            setTicketData(list);
-            if (ticketData.length > 0) {
-                console.log(ticketData);
-            }
-        }, (err) => {
-            console.log(err)
-        });
-
-        return () => {
-            unsub();
-        };
-    }, []);
 
     const deleteTicket = async (id) => {
         try {
@@ -41,9 +32,7 @@ const DisplayInvoice = () => {
     return (
         <>
             <div className="container">
-                <div className="sidebarContainer">
-                    <Sidebar />
-                </div>
+                <Sidebar />
                 <div className="invoiceContainer">
                     <Navbar />
                     <div className="header">
@@ -64,24 +53,36 @@ const DisplayInvoice = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {ticketData?.map((item, index) => (
-                                <tr key={item.id}>
-                                    <td className="tableCell">{item.subject}</td>
-                                    <td className="tableCell">{item.reporter}</td>
-                                    <td className="tableCell">{item.timeStamp ? item.timeStamp.toDate().toDateString() : ''}</td>
-                                    <td className="tableCell">{item.status}</td>
-                                    <td className="tableCell">{item.assignee ? item.assignee.fullname : 'unassigned'}</td>
-                                    <td className="tableCell">
-                                        <button
-                                            onClick={() => navigate(`/tickets/${item.id}`)}
-                                            className="greenButton"
-                                        >
-                                            View
-                                        </button>
-                                        <button className="redButton" onClick={() => deleteTicket(item.id)}>Delete</button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {ticketData &&
+                                ticketData
+                                    .filter((ticket) => {
+                                        if (window.location.pathname === '/') {
+                                            // Display tickets of loggedUser
+                                            return ticket.assignee?.id === loggedUser?.id;
+                                        } else if (window.location.pathname === '/tickets') {
+                                            // Display all tickets
+                                            return true;
+                                        }
+                                        return false;
+                                    })
+                                    .map((item, index) => (
+                                        <tr key={item.id}>
+                                            <td className="tableCell">{item.subject}</td>
+                                            <td className="tableCell">{item.reporter}</td>
+                                            <td className="tableCell">{item.timeStamp ? item.timeStamp.toDate().toDateString() : ''}</td>
+                                            <td className={`tableCell-${item.status}`}>{item.status}</td>
+                                            <td className="tableCell">{item.assignee ? item.assignee.fullname : 'unassigned'}</td>
+                                            <td className="tableCell">
+                                                <button
+                                                    onClick={() => navigate(`/tickets/${item.id}`)}
+                                                    className="greenButton"
+                                                >
+                                                    View
+                                                </button>
+                                                <button className="redButton" onClick={() => deleteTicket(item.id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    ))}
                         </tbody>
                     </table>
                 </div>

@@ -1,12 +1,11 @@
 import Stats from './pages/stats/Stats';
 import UserList from './pages/userlist/UserList';
 import UserProfile from './pages/single/userProfile';
-import AddUser from './pages/adduser/AddUser';
 import AddTicket from './pages/tickets/addTicket';
 import DisplayTickets from './pages/tickets/DisplayTickets';
 import SingleTicket from './pages/tickets/SingleTicket';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { userInputs, ticketInputs } from './formInputs';
+import { ticketInputs } from './formInputs';
 import { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDoc, doc, onSnapshot } from 'firebase/firestore';
@@ -29,7 +28,8 @@ const App = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [ticketData, setTicketData] = useState([]);
   const [tempData, setTempData] = useState(null);
-  const [usersLength, setUsersLength] = useState(0)
+  const [usersLength, setUsersLength] = useState(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 
   useEffect(() => {
@@ -52,6 +52,26 @@ const App = () => {
 
 
   }, [])
+
+
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, "invoices"), (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        list.push({ id: doc.id, ...doc.data() });
+      });
+      setTicketData(list);
+      if (ticketData.length > 0) {
+        console.log(ticketData);
+      }
+    }, (err) => {
+      console.log(err)
+    });
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -80,7 +100,7 @@ const App = () => {
   }
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, usersLength, ticketData, tempData, setTempData, loggedUser, comments, setComments, userId, setUserId, isEditing, setIsEditing }}>
+    <UserContext.Provider value={{ userData, setUserData, usersLength, ticketData, setTicketData, tempData, setTempData, loggedUser, comments, setComments, userId, setUserId, isEditing, setIsEditing, isSidebarOpen, setIsSidebarOpen }}>
       <div className='App'>
         <BrowserRouter>
           <Routes>
@@ -91,7 +111,6 @@ const App = () => {
               <Route path='users'>
                 <Route index element={<RequireAuth><UserList /></RequireAuth>} />
                 <Route path='profile' element={<UserProfile />} />
-                <Route path='add' element={<RequireAuth><AddUser inputs={userInputs} title="Add New User" /></RequireAuth>} />
                 <Route path='edit' element={<RequireAuth><EditUser /></RequireAuth>} />
                 <Route path='stats' element={<RequireAuth><Stats /></RequireAuth>} />
               </Route>

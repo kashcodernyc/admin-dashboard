@@ -17,7 +17,7 @@ const Tickets = ({ inputs, title }) => {
     const [ticketData, setTicketData] = useState({
         subject: "",
         reporter: loggedUser.fullname,
-        status: "Unassigned",
+        status: "Open",
         textarea: "",
         assignee: {},
     });
@@ -79,7 +79,7 @@ const Tickets = ({ inputs, title }) => {
             // Add a new document with a generated id.
             await addDoc(collection(db, 'invoices'), {
                 ...ticketData,
-                assignee: selectedUser,
+                assignee: searchQuery,
                 timeStamp: serverTimestamp(),
             });
             navigate(-1);
@@ -93,14 +93,12 @@ const Tickets = ({ inputs, title }) => {
 
     return (
         <div className="container">
-            <div className="sidebarContainer">
-                <Sidebar />
-            </div>
+            <Sidebar />
             <div className="invoiceContainer">
                 <Navbar />
                 <div className="description">
                     <div>
-                        <h1 className="title">{title}</h1>
+                        <h1 className="h3title">{title}</h1>
                     </div>
                     <form onSubmit={handleAddTicket}>
                         <div className="formInput">
@@ -137,7 +135,9 @@ const Tickets = ({ inputs, title }) => {
                                 id="searchUser"
                                 type="text"
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onChange={(e) => {
+                                    setSearchQuery(e.target.value)
+                                }}
                                 placeholder="Search by name..."
                             />
                             <div>

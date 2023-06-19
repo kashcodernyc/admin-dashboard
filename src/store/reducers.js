@@ -1,15 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const commentSlice = createSlice({
-  name: "comment",
-  initialState: [],
+const initialState = {
+  isOpen: false,
+};
+
+const sidebarSlice = createSlice({
+  name: "sidebar",
+  initialState,
   reducers: {
-    setComment: (state, action) => {
-      return action.payload;
+    toggleSidebar: (state) => {
+      state.isOpen = !state.isOpen;
     },
   },
 });
 
-export const { setComment } = commentSlice.actions;
+export const { toggleSidebar } = sidebarSlice.actions;
 
-export default commentSlice.reducer;
+export default sidebarSlice.reducer;

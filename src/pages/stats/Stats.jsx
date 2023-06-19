@@ -9,9 +9,7 @@ import DisplayInvoice from '../tickets/DisplayTickets';
 const Stats = () => {
   return (
     <div className='container'>
-      <div className="sidebarContainer">
-        <Sidebar />
-      </div>
+      <Sidebar />
       <div className='invoiceContainer'>
         <Navbar />
         <div className='widgets'>

@@ -1,16 +1,18 @@
 .sidebar {
+    position: relative;
     background-color: #00143e;
-    height: 90vh;
+    padding: 10px;
+    height: 97%;
+    top: 0;
+    transition: left 0.3s ease;
     margin-right: 20px;
-    display: flex;
-    flex-direction: column;
-
 }
+
+
 
 .center {
     flex-grow: 1;
-    display: flex;
-    align-items: stretch;
+    overflow-y: auto;
 }
 
 .center ul {
@@ -53,38 +55,11 @@
     margin-left: 10px;
 }
 
-
-
 @media (max-width: 768px) {
-    .sidebar {
-    background-color: #00143e;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    overflow: hidden;
-    transition: width 0.3s ease;
-
-    &.open {
-        width: 250px;
+    .sidebar{
+        display: none;
     }
-    }
-
-    .center {
-        flex-grow: 1;
-        overflow-y: auto;
-    }
-
-    .burger-menu {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding: 10px;
-        cursor: pointer;
-        z-index: 1;
-        position: fixed;
-        top: 0;
-        right: 0;
+    .sidebar.open {
+        display: block;
     }
 }

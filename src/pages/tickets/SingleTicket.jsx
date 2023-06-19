@@ -106,9 +106,7 @@ const SingleTicket = () => {
 
     return (
         <div className="container">
-            <div className="sidebarContainer">
-                <Sidebar />
-            </div>
+            <Sidebar />
             <div className="invoiceContainer">
                 <Navbar />
                 {isEditingTicket ? <EditTicket id={id} setIsEditingTicket={setIsEditingTicket} /> : (
@@ -153,9 +151,9 @@ const SingleTicket = () => {
                         .map((comment) => (
                             <div className="post-container" key={comment.id}>
                                 <div className="image-container">
-                                    <img src={comment.image} alt={comment.fullname} class="user-image" />
+                                    <img src={comment.image} alt={comment.fullname} className="user-image" />
                                 </div>
-                                <div class="comment-container">
+                                <div className="comment-container">
                                     <p className="username">{comment.fullname}</p>
                                     <p className="comment">{comment.comment}</p>
                                     <p className="comment">
