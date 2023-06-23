@@ -9,7 +9,7 @@ import Navbar from '../../components/navbar/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-const DisplayInvoice = () => {
+const DisplayTickets = () => {
     const { ticketData, setTicketData, loggedUser } = useContext(UserContext)
     if (loggedUser) {
         console.log(loggedUser);
@@ -92,4 +92,4 @@ const DisplayInvoice = () => {
     );
 };
 
-export default DisplayInvoice;
+export default DisplayTickets;

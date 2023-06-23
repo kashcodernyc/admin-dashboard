@@ -1,6 +1,6 @@
 import Stats from './pages/stats/Stats';
 import UserList from './pages/userlist/UserList';
-import UserProfile from './pages/single/userProfile';
+import UserProfile from './pages/profile/userProfile';
 import AddTicket from './pages/tickets/addTicket';
 import DisplayTickets from './pages/tickets/DisplayTickets';
 import SingleTicket from './pages/tickets/SingleTicket';

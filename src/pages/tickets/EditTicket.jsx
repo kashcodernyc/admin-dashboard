@@ -29,7 +29,6 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                         ...ticketData,
                         assignee: ticketData.assignee || '',
                     }));
-                    console.log(ticketData);
                 } else {
                     console.log('No such document!');
                 }

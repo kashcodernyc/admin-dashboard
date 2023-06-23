@@ -1,22 +1,20 @@
 import './navbar.scss';
 import { RxHamburgerMenu } from 'react-icons/rx'
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useContext } from 'react';
+import { useDispatch } from 'react-redux';
+import { useContext } from 'react';
 import { UserContext } from '../../Contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { toggleSidebar } from '../../store/reducers';
+import { toggleSidebar } from '../../store/sidebarReducer';
 
 
 
 const Navbar = () => {
   const { loggedUser } = useContext(UserContext);
-  const isSidebarOpen = useSelector((state) => state.sidebar.isOpen);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleToggleSidebar = () => {
     dispatch(toggleSidebar());
-    console.log(isSidebarOpen)
   };
 
   return (

@@ -3,7 +3,7 @@ import { UserContext } from '../../Contexts/UserContext';
 import { doc, serverTimestamp, updateDoc, getDoc } from "firebase/firestore";
 import { db, storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import '../../pages/single/userProfile.scss'
+import '../../pages/profile/userProfile.scss'
 
 
 
@@ -12,7 +12,6 @@ const EditUser = () => {
 
     const { loggedUser } = useContext(UserContext);
     const userId = loggedUser.id;
-    console.log(loggedUser, userId);
 
     const [file, setFile] = useState("");
     const [prevData, setPrevData] = useState("");
