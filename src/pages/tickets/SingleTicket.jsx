@@ -112,16 +112,17 @@ const SingleTicket = () => {
                 {isEditingTicket ? <EditTicket id={id} setIsEditingTicket={setIsEditingTicket} /> : (
                     <div className="description">
                         <div className="header">
-                            <h1 className="whiteTitle"> Ticket Description </h1>
+                            <h1> Ticket Description </h1>
                             <button className="button" onClick={() => setIsEditingTicket(true)}>
                                 Edit Ticket
                             </button>
                         </div>
                         <div className="ticketInfo">
-                            <h3 className="h3title">Subject: {ticketData.subject}</h3>
+                            <h3 className="h3title">Subject:</h3>
+                            <p>{ticketData.subject}</p>
                             <h3 className="h3title">Reporter:</h3>
                             <p>{ticketData.reporter}</p>
-                            <h3 className="h3title">status:</h3>
+                            <h3 className="h3title">Status:</h3>
                             <p>{ticketData.status}</p>
                             <h3 className="h3title">Assigne:</h3>
                             <p>{ticketData.assignee ? ticketData.assignee.fullname : 'unassigned'}</p>

@@ -61,9 +61,6 @@ const App = () => {
         list.push({ id: doc.id, ...doc.data() });
       });
       setTicketData(list);
-      if (ticketData.length > 0) {
-        console.log(ticketData);
-      }
     }, (err) => {
       console.log(err)
     });

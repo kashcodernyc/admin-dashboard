@@ -87,7 +87,7 @@ const Signup = ({ setActiveTab }) => {
     return (
         <>
             <div className="authContainer">
-                <h1 className="whiteTitle">Sign Up</h1>
+                <h1>Sign Up</h1>
                 <form onSubmit={handleAddUser}>
                     {signupInputs.map((input) => (
                         <div className="formInput" key={input.id}>

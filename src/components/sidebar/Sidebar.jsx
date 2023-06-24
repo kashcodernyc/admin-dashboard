@@ -53,13 +53,6 @@ const Sidebar = () => {
               </li>
             </Link>
 
-            <Link to="/users" style={{ textDecoration: 'none' }}>
-              <li onClick={handleToggleSidebar}>
-                <PeopleOutlineIcon className="icon" />
-                <span className="navLinks">Users</span>
-              </li>
-            </Link>
-
             <Link to="/tickets" style={{ textDecoration: 'none' }}>
               <li onClick={handleToggleSidebar}>
                 <DescriptionOutlinedIcon className="icon" />
@@ -67,16 +60,17 @@ const Sidebar = () => {
               </li>
             </Link>
 
-            <li onClick={handleToggleSidebar}>
-              <CalendarMonthIcon className="icon" />
-              <span className="navLinks">Events</span>
-            </li>
-
-
             <Link to="/users/stats" style={{ textDecoration: 'none' }}>
               <li onClick={handleToggleSidebar}>
                 <QueryStatsIcon className="icon" />
                 <span className="navLinks">Stats</span>
+              </li>
+            </Link>
+
+            <Link to="/users" style={{ textDecoration: 'none' }}>
+              <li onClick={handleToggleSidebar}>
+                <PeopleOutlineIcon className="icon" />
+                <span className="navLinks">Users</span>
               </li>
             </Link>
 
@@ -86,6 +80,11 @@ const Sidebar = () => {
                 <span className="navLinks">Profile</span>
               </li>
             </Link>
+
+            <li onClick={handleToggleSidebar}>
+              <CalendarMonthIcon className="icon" />
+              <span className="navLinks">Events</span>
+            </li>
 
             <li onClick={handleLogout}>
               <LogoutIcon className="icon" />

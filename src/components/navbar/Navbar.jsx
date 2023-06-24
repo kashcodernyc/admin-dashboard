@@ -1,5 +1,6 @@
 import './navbar.scss';
 import { RxHamburgerMenu } from 'react-icons/rx'
+import { BiSearchAlt } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
 import { useContext } from 'react';
 import { UserContext } from '../../Contexts/UserContext';
@@ -22,6 +23,9 @@ const Navbar = () => {
       <div className="wrapper">
         <div>
           <RxHamburgerMenu onClick={handleToggleSidebar} className="burger-menu" />
+        </div>
+        <div className="searchInput">
+          <input type="text" placeholder="search..." /><BiSearchAlt className="searchIcon" />
         </div>
         <div className="items">
           <div className="item">

@@ -1,8 +1,9 @@
 .sidebar {
-    background-color: #00143e;
+    background-color: white;
     padding: 10px;
     height: 97%;
     top: 0;
+    border-radius: 10px;
     transition: left 0.3s ease;
     margin-right: 20px;
 }
@@ -25,13 +26,6 @@
     flex-grow: 1;
 }
 
-.groupTitle {
-    font-size: 10px;
-    font-weight: bold;
-    color: white;
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
 
 .center ul li {
     display: flex;
@@ -40,18 +34,19 @@
     cursor: pointer;
 
     &:hover {
-        background-color: #1D63FF;
+        background-color: #8db1ff;
+        border-radius: 10px;
     }
 }
 
 .icon {
-    font-size: 22px;
-    color: rgb(0, 255, 68);
+    font-size: 12px;
+    color: black;
 }
 
 .navLinks {
     font-size: 12px;
-    color: white;
+    color: black;
     margin-left: 10px;
 }
 
@@ -87,9 +82,10 @@
 
 
     .center{
-        background-color: #00143e;
-        width: 200px;
-        height: 100vh;
+        background-color: white;
+        width: 150px;
+        height: 98vh;
+        border-radius: 10px;
     }
 
     .center ul{

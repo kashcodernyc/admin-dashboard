@@ -138,13 +138,13 @@ const Stats = () => {
           <div className="pieChartContainer">
             <div className='title'>Ticket Status Report</div>
             <h3 style={{ color: '#00143e' }} className='h3title'>Current Tickets: {ticketData.length}</h3>
-            <PieChart width={360} height={360}>
+            <PieChart width={360} height={300}>
               <Pie
                 activeIndex={activeIndex}
                 activeShape={renderActiveShape}
                 data={data}
                 cx={180}
-                cy={180}
+                cy={120}
                 innerRadius={50}
                 outerRadius={70}
                 dataKey="value"

@@ -10,9 +10,10 @@ import { UserContext } from '../../Contexts/UserContext'
 const useStyles = makeStyles({
     datatable: {
         height: '400px',
-        backgroundColor: '#1D63FF',
-        color: 'white',
-        fontSize: '12px'
+        backgroundColor: '#eaeaea',
+        color: 'black',
+        fontSize: '12px',
+        borderRadius: '10px',
     },
     cellAction: {
         display: 'flex',
