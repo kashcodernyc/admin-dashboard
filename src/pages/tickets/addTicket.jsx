@@ -21,7 +21,6 @@ const Tickets = ({ inputs, title }) => {
         textarea: "",
         assignee: {},
     });
-    const [isSearching, setIsSearching] = useState(true);
     const [percent, setPercent] = useState(null);
     const navigate = useNavigate();
 
@@ -65,7 +64,7 @@ const Tickets = ({ inputs, title }) => {
 
     const handleInput = (e) => {
         const { id, value } = e.target;
-        if (id === 'assignedUser') {
+        if (id === 'assignee') {
             setSelectedUser(value);
         } else {
             setTicketData({ ...ticketData, [id]: value });
@@ -132,7 +131,7 @@ const Tickets = ({ inputs, title }) => {
                         <div className="formInput">
                             <label>Assignee</label>
                             <input
-                                id="searchUser"
+                                id="assignee"
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => {

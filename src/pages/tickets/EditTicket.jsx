@@ -27,7 +27,7 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                     setTicketData((prevData) => ({
                         ...prevData,
                         ...ticketData,
-                        assignee: ticketData.assignee || '',
+                        assignee: ticketData.assignee || 'unassigned',
                     }));
                 } else {
                     console.log('No such document!');
@@ -45,9 +45,10 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                 const docRef = doc(db, 'invoices', id);
                 await updateDoc(docRef, {
                     ...ticketData,
-                    assignee: selectedUser || ticketData.assignee,
+                    assignee: selectedUser || 'unassigned',
                     timestamp: serverTimestamp(),
                 });
+                console.log(ticketData);
                 setIsEditingTicket(false);
             }
         } catch (err) {
@@ -57,10 +58,16 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
 
     const handleChange = (event) => {
         const { id, value } = event.target;
-        setTicketData((prevData) => ({
-            ...prevData,
-            [id]: value,
-        }));
+        if (id === 'assignee') {
+            setSearchQuery(value);
+            const user = userData.find((user) => user.fullname.toLowerCase() === value.toLowerCase());
+            setSelectedUser(user || 'unassigned');
+        } else {
+            setTicketData((prevData) => ({
+                ...prevData,
+                [id]: value,
+            }));
+        }
     };
 
     return (
@@ -71,7 +78,7 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
             <form onSubmit={handleEditTicket}>
                 {ticketInputs.map((input) => (
                     <div className="formInput" key={input.id}>
-                        <label>{input.label}</label>
+                        <h3 className="h3title">{input.label}:</h3>
                         {input.type === 'select' ? (
                             <select
                                 id={input.id}
@@ -98,13 +105,13 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                     </div>
                 ))}
                 <div className="formInput">
-                    <label>Assignee</label>
+                    <h3 className="h3title">Assignee:</h3>
                     <input
-                        id="searchUser"
+                        id="assignee"
                         type="text"
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder={ticketData?.assignee?.fullname || 'unassigned'}
+                        onChange={handleChange}
+                        placeholder={'Search by name...'}
                     />
                     <div>
                         {searchQuery && (
@@ -117,21 +124,24 @@ const EditTicket = ({ id, setIsEditingTicket }) => {
                                                 user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
                                         )
                                         .map((user) => (
-                                            <li
-                                                onClick={() => {
-                                                    setSelectedUser(user);
-                                                    setSearchQuery(user.fullname);
-                                                }}
-                                                key={user.id}
-                                            >
-                                                {user.fullname}
-                                            </li>
+                                            <ul>
+                                                <li
+                                                    onClick={() => {
+                                                        setSelectedUser(user);
+                                                        setSearchQuery(user.fullname);
+                                                    }}
+                                                    key={user.id}
+                                                >
+                                                    {user.fullname}
+                                                </li>
+                                            </ul>
                                         ))}
                             </ul>
                         )}
                     </div>
                 </div>
                 <div className="formInput">
+                    <h3 className="h3title">Description:</h3>
                     <textarea
                         id="textarea"
                         value={ticketData.textarea || ''}

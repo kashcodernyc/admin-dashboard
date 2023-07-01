@@ -1,6 +1,5 @@
 import './ticket.scss';
 import { useContext } from 'react';
-import { useSelector } from 'react-redux';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { UserContext } from '../../Contexts/UserContext';
@@ -65,8 +64,8 @@ const DisplayTickets = () => {
                                                 <td className="tableCell">{item.subject}</td>
                                                 <td className="tableCell">{item.reporter}</td>
                                                 <td className="tableCell">{item.timeStamp ? item.timeStamp.toDate().toDateString() : ''}</td>
-                                                <td className={`tableCell-${item.status}`}>{item.status}</td>
-                                                <td className="tableCell">{item.assignee ? item.assignee.fullname : 'unassigned'}</td>
+                                                <td style={{ paddingLeft: '8px' }} className={item.status === 'In Progress' ? 'In-Progress' : item.status}>{item.status}</td>
+                                                <td className="tableCell">{item.assignee ? item.assignee.fullname : item.assignee}</td>
                                                 <td className="tableCell">
                                                     <button
                                                         onClick={() => navigate(`/tickets/${item.id}`)}

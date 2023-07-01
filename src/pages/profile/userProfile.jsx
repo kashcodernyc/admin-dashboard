@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../Contexts/UserContext';
 import EditUser from '../../components/edituser/EditUser';
+import { AiFillCloseSquare } from 'react-icons/ai'
 
 const UserProfile = () => {
   const { loggedUser } = useContext(UserContext);
@@ -19,9 +20,7 @@ const UserProfile = () => {
 
   return (
     <div className="container">
-      <div className="sidebarContainer">
-        <Sidebar />
-      </div>
+      <Sidebar />
       <div className="invoiceContainer">
         <Navbar />
         <div className="profileDetails">
@@ -61,7 +60,7 @@ const UserProfile = () => {
       {isEditingUser && (
         <div className="modalContainer">
           <div className="modalContent">
-            <button onClick={closeModal} className="redButton">Close</button>
+            <AiFillCloseSquare onClick={closeModal} className="closeIcon" />
             <EditUser userId={loggedUser?.id} />
           </div>
         </div>

@@ -1,10 +1,8 @@
 .sidebar {
     background-color: white;
     padding: 10px;
-    height: 97%;
     top: 0;
     border-radius: 10px;
-    transition: left 0.3s ease;
     margin-right: 20px;
 }
 
@@ -30,12 +28,13 @@
 .center ul li {
     display: flex;
     align-items: center;
-    padding: 5px;
+    margin: 10px;
+    padding: 10px;
     cursor: pointer;
 
     &:hover {
         background-color: #8db1ff;
-        border-radius: 10px;
+        border-radius: 20px;
     }
 }
 
@@ -54,15 +53,13 @@
     position: absolute;
     top: 0;
     right: 0;
-    margin: 20px;
-    background-color: #f44336;
+    padding: 10px;
+    font-size: 26px;
     border: none;
-    width: 80px;
-    height: 35px;
-    color: white;
+    color: red;
     display: none;
 }
-@media (max-width: 768px) {
+@media (max-width: 980px) {
     .sidebar{
         display: none;
     }
@@ -84,8 +81,7 @@
     .center{
         background-color: white;
         width: 150px;
-        height: 98vh;
-        border-radius: 10px;
+        height: 100%;
     }
 
     .center ul{

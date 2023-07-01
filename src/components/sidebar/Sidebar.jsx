@@ -6,6 +6,7 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { AiFillCloseSquare } from 'react-icons/ai'
 import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthContext } from '../context/AuthContext';
@@ -44,7 +45,7 @@ const Sidebar = () => {
     <>
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="center">
-          <button onClick={handleToggleSidebar} className="closeSideBar">Close</button>
+          <AiFillCloseSquare onClick={handleToggleSidebar} className="closeSideBar" />
           <ul>
             <Link to="/" style={{ textDecoration: 'none' }}>
               <li onClick={handleToggleSidebar}>

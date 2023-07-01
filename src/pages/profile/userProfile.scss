@@ -17,7 +17,6 @@
     background-color: white;
     border-radius: 10px;
     margin-top: 20px;
-    height: 85%;
 }
 
 .top {
@@ -60,7 +59,8 @@ label {
 
 .details {
     background-color: #eaeaea;
-    margin-top: 10px;
+    margin: 20px;
+    padding: 20px;
     max-width: 300px;
     height: 250px;
     font-size: 14px;
@@ -78,17 +78,23 @@ label {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    overflow: scroll;
     z-index: 1;
 
 }
 
 .modalContent {
-    width: 50%;
-    height: 92vh;
-    border-radius: 10px;
+    width: 75%;
+    height: 100%;
+    padding: 10px;
     background-color: white;
-    padding: 20px;
     animation: slide-in 0.3s ease-in-out;
+}
+
+.closeIcon{
+    color: red;
+    margin-top: 10px;
+    font-size: 26px;
 }
 
 @keyframes slide-in {
@@ -133,13 +139,17 @@ label {
 }
 
 .formInput input {
-    border: none;
-    border-bottom: 1px solid #ccc;
+    border: .5px solid gray;
     padding: 5px;
-    width: 100%;
+    width: 400px;
+    height: 30px;
+    border-radius: 5px;
 }
 
-@media screen and (max-width: 768px) {
-
-
+@media screen and (max-width: 980px) {
+    .formInput input {
+            border: .5px solid gray;
+            padding: 5px;
+            width: 300px;
+        }
 }

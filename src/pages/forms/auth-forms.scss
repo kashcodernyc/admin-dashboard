@@ -13,7 +13,7 @@ body {
     margin: 150px auto;
     padding: 30px;
     background-color: white;
-    width: 500px;
+    width: 400px;
     border-radius:10px;
 }
 
@@ -88,4 +88,11 @@ a {
     margin-left: 10px;
     color: #1D63FF;
     cursor: pointer;
+}
+
+
+@media screen and (max-width: 980px) {
+    .authContainer{
+        width: 300px;
+    }
 }
